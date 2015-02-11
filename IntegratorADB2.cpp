@@ -39,7 +39,9 @@ IntegratorADB2::~IntegratorADB2()
   delete [] m_state;
 
   for (unsigned i = 0; i < 2; ++i)
-    delete [] m_f;
+  {
+    delete m_f[i];
+  }
 }
 
 //------------------------------------------------------------------------------

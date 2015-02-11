@@ -229,10 +229,10 @@ void SDLWindow::SaveToTGA(const std::string &sName)
 
   std::fstream file(sFile.c_str(), ios::out|ios::binary|ios::trunc);
   char TGAheader[12] = { 0,0,2,0,0,0,0,0,0,0,0,0 };
-  char header[6] = { GetWidth()  % 256,
-                     GetWidth()  / 256,
-                     GetHeight() % 256,
-                     GetHeight() / 256,
+  char header[6] = { (char)(GetWidth()  % 256),
+                     (char)(GetWidth()  / 256),
+                     (char)(GetHeight() % 256),
+                     (char)(GetHeight() / 256),
                      24,
                      0 };
   file.write(TGAheader, sizeof(TGAheader));

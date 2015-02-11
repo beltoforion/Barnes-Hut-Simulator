@@ -41,7 +41,7 @@ public:
 
   BHTreeNode(const Vec2D &min,
              const Vec2D &max,
-             BHTreeNode *parent=NULL);
+             BHTreeNode *parent=nullptr);
  ~BHTreeNode();
 
   void Reset(const Vec2D &min,

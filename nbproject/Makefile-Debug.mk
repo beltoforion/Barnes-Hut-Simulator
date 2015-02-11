@@ -10,55 +10,60 @@
 # Environment
 MKDIR=mkdir
 CP=cp
+GREP=grep
+NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
 CC=gcc
 CCC=g++
 CXX=g++
-FC=
+FC=gfortran
 AS=as
 
 # Macros
 CND_PLATFORM=GNU-Linux-x86
+CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
+CND_BUILDDIR=build
 
 # Include project Makefile
 include Makefile
 
 # Object Directory
-OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
+OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/IntegratorEuler.o \
-	${OBJECTDIR}/IntegratorRK3.o \
-	${OBJECTDIR}/IntegratorADB6.o \
 	${OBJECTDIR}/BHTree.o \
-	${OBJECTDIR}/IntegratorHeun.o \
-	${OBJECTDIR}/SDLWnd.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/NBodyWnd.o \
-	${OBJECTDIR}/Vector.o \
 	${OBJECTDIR}/IIntegrator.o \
-	${OBJECTDIR}/IntegratorADB4.o \
 	${OBJECTDIR}/IModel.o \
-	${OBJECTDIR}/IntegratorEulerImproved.o \
-	${OBJECTDIR}/IntegratorADB3.o \
-	${OBJECTDIR}/Types.o \
 	${OBJECTDIR}/IntegratorADB2.o \
-	${OBJECTDIR}/IntegratorRK5.o \
+	${OBJECTDIR}/IntegratorADB3.o \
+	${OBJECTDIR}/IntegratorADB4.o \
 	${OBJECTDIR}/IntegratorADB5.o \
-	${OBJECTDIR}/ModelNBody.o \
+	${OBJECTDIR}/IntegratorADB6.o \
+	${OBJECTDIR}/IntegratorEuler.o \
+	${OBJECTDIR}/IntegratorEulerImproved.o \
+	${OBJECTDIR}/IntegratorHeun.o \
+	${OBJECTDIR}/IntegratorRK3.o \
 	${OBJECTDIR}/IntegratorRK4.o \
-	${OBJECTDIR}/IntegratorRKF4.o
+	${OBJECTDIR}/IntegratorRK5.o \
+	${OBJECTDIR}/IntegratorRKF4.o \
+	${OBJECTDIR}/ModelNBody.o \
+	${OBJECTDIR}/NBodyWnd.o \
+	${OBJECTDIR}/SDLWnd.o \
+	${OBJECTDIR}/Types.o \
+	${OBJECTDIR}/Vector.o \
+	${OBJECTDIR}/main.o
+
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-std=c++11
+CXXFLAGS=-std=c++11
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -67,128 +72,128 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-lSDL -lSDL_ttf -lGL -lGLU -lX11
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-Linux-x86/barnes_hut
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/barnes-hut-simulator
 
-dist/Debug/GNU-Linux-x86/barnes_hut: ${OBJECTFILES}
-	${MKDIR} -p dist/Debug/GNU-Linux-x86
-	${LINK.cc} -lSDL -lSDL_ttf -lGL -lGLU -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/barnes_hut ${OBJECTFILES} ${LDLIBSOPTIONS} 
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/barnes-hut-simulator: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/barnes-hut-simulator ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/IntegratorEuler.o: nbproject/Makefile-${CND_CONF}.mk IntegratorEuler.cpp 
+${OBJECTDIR}/BHTree.o: BHTree.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorEuler.o IntegratorEuler.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/BHTree.o BHTree.cpp
 
-${OBJECTDIR}/IntegratorRK3.o: nbproject/Makefile-${CND_CONF}.mk IntegratorRK3.cpp 
+${OBJECTDIR}/IIntegrator.o: IIntegrator.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorRK3.o IntegratorRK3.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IIntegrator.o IIntegrator.cpp
 
-${OBJECTDIR}/IntegratorADB6.o: nbproject/Makefile-${CND_CONF}.mk IntegratorADB6.cpp 
+${OBJECTDIR}/IModel.o: IModel.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorADB6.o IntegratorADB6.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IModel.o IModel.cpp
 
-${OBJECTDIR}/BHTree.o: nbproject/Makefile-${CND_CONF}.mk BHTree.cpp 
+${OBJECTDIR}/IntegratorADB2.o: IntegratorADB2.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/BHTree.o BHTree.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorADB2.o IntegratorADB2.cpp
 
-${OBJECTDIR}/IntegratorHeun.o: nbproject/Makefile-${CND_CONF}.mk IntegratorHeun.cpp 
+${OBJECTDIR}/IntegratorADB3.o: IntegratorADB3.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorHeun.o IntegratorHeun.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorADB3.o IntegratorADB3.cpp
 
-${OBJECTDIR}/SDLWnd.o: nbproject/Makefile-${CND_CONF}.mk SDLWnd.cpp 
+${OBJECTDIR}/IntegratorADB4.o: IntegratorADB4.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SDLWnd.o SDLWnd.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorADB4.o IntegratorADB4.cpp
 
-${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
+${OBJECTDIR}/IntegratorADB5.o: IntegratorADB5.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorADB5.o IntegratorADB5.cpp
 
-${OBJECTDIR}/NBodyWnd.o: nbproject/Makefile-${CND_CONF}.mk NBodyWnd.cpp 
+${OBJECTDIR}/IntegratorADB6.o: IntegratorADB6.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/NBodyWnd.o NBodyWnd.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorADB6.o IntegratorADB6.cpp
 
-${OBJECTDIR}/Vector.o: nbproject/Makefile-${CND_CONF}.mk Vector.cpp 
+${OBJECTDIR}/IntegratorEuler.o: IntegratorEuler.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Vector.o Vector.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorEuler.o IntegratorEuler.cpp
 
-${OBJECTDIR}/IIntegrator.o: nbproject/Makefile-${CND_CONF}.mk IIntegrator.cpp 
+${OBJECTDIR}/IntegratorEulerImproved.o: IntegratorEulerImproved.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IIntegrator.o IIntegrator.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorEulerImproved.o IntegratorEulerImproved.cpp
 
-${OBJECTDIR}/IntegratorADB4.o: nbproject/Makefile-${CND_CONF}.mk IntegratorADB4.cpp 
+${OBJECTDIR}/IntegratorHeun.o: IntegratorHeun.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorADB4.o IntegratorADB4.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorHeun.o IntegratorHeun.cpp
 
-${OBJECTDIR}/IModel.o: nbproject/Makefile-${CND_CONF}.mk IModel.cpp 
+${OBJECTDIR}/IntegratorRK3.o: IntegratorRK3.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IModel.o IModel.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorRK3.o IntegratorRK3.cpp
 
-${OBJECTDIR}/IntegratorEulerImproved.o: nbproject/Makefile-${CND_CONF}.mk IntegratorEulerImproved.cpp 
+${OBJECTDIR}/IntegratorRK4.o: IntegratorRK4.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorEulerImproved.o IntegratorEulerImproved.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorRK4.o IntegratorRK4.cpp
 
-${OBJECTDIR}/IntegratorADB3.o: nbproject/Makefile-${CND_CONF}.mk IntegratorADB3.cpp 
+${OBJECTDIR}/IntegratorRK5.o: IntegratorRK5.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorADB3.o IntegratorADB3.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorRK5.o IntegratorRK5.cpp
 
-${OBJECTDIR}/Types.o: nbproject/Makefile-${CND_CONF}.mk Types.cpp 
+${OBJECTDIR}/IntegratorRKF4.o: IntegratorRKF4.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Types.o Types.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IntegratorRKF4.o IntegratorRKF4.cpp
 
-${OBJECTDIR}/IntegratorADB2.o: nbproject/Makefile-${CND_CONF}.mk IntegratorADB2.cpp 
+${OBJECTDIR}/ModelNBody.o: ModelNBody.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorADB2.o IntegratorADB2.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ModelNBody.o ModelNBody.cpp
 
-${OBJECTDIR}/IntegratorRK5.o: nbproject/Makefile-${CND_CONF}.mk IntegratorRK5.cpp 
+${OBJECTDIR}/NBodyWnd.o: NBodyWnd.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorRK5.o IntegratorRK5.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NBodyWnd.o NBodyWnd.cpp
 
-${OBJECTDIR}/IntegratorADB5.o: nbproject/Makefile-${CND_CONF}.mk IntegratorADB5.cpp 
+${OBJECTDIR}/SDLWnd.o: SDLWnd.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorADB5.o IntegratorADB5.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SDLWnd.o SDLWnd.cpp
 
-${OBJECTDIR}/ModelNBody.o: nbproject/Makefile-${CND_CONF}.mk ModelNBody.cpp 
+${OBJECTDIR}/Types.o: Types.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/ModelNBody.o ModelNBody.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Types.o Types.cpp
 
-${OBJECTDIR}/IntegratorRK4.o: nbproject/Makefile-${CND_CONF}.mk IntegratorRK4.cpp 
+${OBJECTDIR}/Vector.o: Vector.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorRK4.o IntegratorRK4.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Vector.o Vector.cpp
 
-${OBJECTDIR}/IntegratorRKF4.o: nbproject/Makefile-${CND_CONF}.mk IntegratorRKF4.cpp 
+${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IntegratorRKF4.o IntegratorRKF4.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
 
 # Clean Targets
-.clean-conf:
-	${RM} -r build/Debug
-	${RM} dist/Debug/GNU-Linux-x86/barnes_hut
+.clean-conf: ${CLEAN_SUBPROJECTS}
+	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/barnes-hut-simulator
 
 # Subprojects
 .clean-subprojects:

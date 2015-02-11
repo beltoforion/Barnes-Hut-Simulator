@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="62">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
@@ -63,43 +63,212 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <commandLine>-std=c++11</commandLine>
+        </ccTool>
         <linkerTool>
           <linkerLibItems>
+            <linkerOptionItem>-lSDL -lSDL_ttf -lGL -lGLU</linkerOptionItem>
+            <linkerOptionItem>-lX11</linkerOptionItem>
           </linkerLibItems>
-          <commandLine>-lSDL -lSDL_ttf -lGL -lGLU</commandLine>
         </linkerTool>
       </compileType>
+      <item path="BHTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BHTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IIntegrator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IIntegrator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB5.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB6.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB6.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorEuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorEuler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorEulerImproved.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorEulerImproved.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorHeun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorHeun.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRK3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRK3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRK4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRK4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRK5.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRK5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRKF4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRKF4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ModelNBody.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ModelNBody.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NBodyWnd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NBodyWnd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SDLWnd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SDLWnd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Types.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
         </cTool>
         <ccTool>
-          <developmentMode>5</developmentMode>
           <stripSymbols>true</stripSymbols>
-          <commandLine>-Wall -fopenmp -O3</commandLine>
+          <incDir>
+            <pElem>/usr/include</pElem>
+          </incDir>
+          <commandLine>-Wall -fopenmp -O3 -std=c++11</commandLine>
           <warningLevel>3</warningLevel>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
         </fortranCompilerTool>
         <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+          </linkerAddLib>
           <linkerLibItems>
+            <linkerOptionItem>-lSDL -lSDL_ttf -lGL -lGLU -lX11</linkerOptionItem>
           </linkerLibItems>
-          <commandLine>-lSDL -lGL -lGLU</commandLine>
         </linkerTool>
       </compileType>
+      <item path="BHTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BHTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IIntegrator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IIntegrator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB5.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorADB6.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorADB6.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorEuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorEuler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorEulerImproved.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorEulerImproved.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorHeun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorHeun.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRK3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRK3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRK4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRK4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRK5.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRK5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntegratorRKF4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntegratorRKF4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ModelNBody.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ModelNBody.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NBodyWnd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NBodyWnd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SDLWnd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SDLWnd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Types.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

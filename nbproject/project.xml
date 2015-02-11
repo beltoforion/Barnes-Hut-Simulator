@@ -10,6 +10,20 @@
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
+            <sourceRootList/>
+            <confList>
+                <confElem>
+                    <name>Debug</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>Release</name>
+                    <type>1</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
     </configuration>
 </project>
