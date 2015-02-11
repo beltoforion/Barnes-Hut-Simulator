@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>BHTree.h</itemPath>
+      <itemPath>IIntegrator.h</itemPath>
+      <itemPath>IModel.h</itemPath>
+      <itemPath>IntegratorADB2.h</itemPath>
+      <itemPath>IntegratorADB3.h</itemPath>
+      <itemPath>IntegratorADB4.h</itemPath>
+      <itemPath>IntegratorADB5.h</itemPath>
+      <itemPath>IntegratorADB6.h</itemPath>
+      <itemPath>IntegratorEuler.h</itemPath>
+      <itemPath>IntegratorEulerImproved.h</itemPath>
+      <itemPath>IntegratorHeun.h</itemPath>
+      <itemPath>IntegratorRK3.h</itemPath>
+      <itemPath>IntegratorRK4.h</itemPath>
+      <itemPath>IntegratorRK5.h</itemPath>
+      <itemPath>IntegratorRKF4.h</itemPath>
+      <itemPath>ModelNBody.h</itemPath>
+      <itemPath>NBodyWnd.h</itemPath>
+      <itemPath>SDLWnd.h</itemPath>
+      <itemPath>Types.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>BHTree.cpp</itemPath>
+      <itemPath>IIntegrator.cpp</itemPath>
+      <itemPath>IModel.cpp</itemPath>
+      <itemPath>IntegratorADB2.cpp</itemPath>
+      <itemPath>IntegratorADB3.cpp</itemPath>
+      <itemPath>IntegratorADB4.cpp</itemPath>
+      <itemPath>IntegratorADB5.cpp</itemPath>
+      <itemPath>IntegratorADB6.cpp</itemPath>
+      <itemPath>IntegratorEuler.cpp</itemPath>
+      <itemPath>IntegratorEulerImproved.cpp</itemPath>
+      <itemPath>IntegratorHeun.cpp</itemPath>
+      <itemPath>IntegratorRK3.cpp</itemPath>
+      <itemPath>IntegratorRK4.cpp</itemPath>
+      <itemPath>IntegratorRK5.cpp</itemPath>
+      <itemPath>IntegratorRKF4.cpp</itemPath>
+      <itemPath>ModelNBody.cpp</itemPath>
+      <itemPath>NBodyWnd.cpp</itemPath>
+      <itemPath>SDLWnd.cpp</itemPath>
+      <itemPath>Types.cpp</itemPath>
+      <itemPath>Vector.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+          <commandLine>-lSDL -lSDL_ttf -lGL -lGLU</commandLine>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <stripSymbols>true</stripSymbols>
+          <commandLine>-Wall -fopenmp -O3</commandLine>
+          <warningLevel>3</warningLevel>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+          <commandLine>-lSDL -lGL -lGLU</commandLine>
+        </linkerTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>
