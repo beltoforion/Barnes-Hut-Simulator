@@ -181,7 +181,7 @@ BHTreeNode::EQuadrant BHTreeNode::GetQuadrant(double x, double y) const
     ss << "Can't determine quadrant!\n"
        << "particle  : " << "(" << x          << ", " << y          << ")\n"
        << "quadMin   : " << "(" << m_min.x    << ", " << m_min.y    << ")\n"
-       << "quadMax   : " << "(" << m_max.y    << ", " << m_max.y    << ")\n"
+       << "quadMax   : " << "(" << m_max.x    << ", " << m_max.y    << ")\n"
        << "quadCenter: " << "(" << m_center.x << ", " << m_center.y << ")\n";
     throw std::runtime_error(ss.str().c_str());
   }
@@ -211,7 +211,7 @@ BHTreeNode* BHTreeNode::CreateQuadNode(EQuadrant eQuad)
 /*
            << "particle  : " << "(" << x          << ", " << y          << ")\n"
              << "quadMin   : " << "(" << m_min.x    << ", " << m_min.y    << ")\n"
-             << "quadMax   : " << "(" << m_max.y    << ", " << m_max.y    << ")\n"
+             << "quadMax   : " << "(" << m_max.x    << ", " << m_max.y    << ")\n"
              << "quadCenter: " << "(" << m_center.x << ", " << m_center.y << ")\n";
 */
           throw std::runtime_error(ss.str().c_str());
