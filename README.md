@@ -6,3 +6,5 @@ English Version:
 
 Deutsche Version:
 [Barnes-Hut Galaxiensimulation](https://beltoforion.de/de/barnes-hut-galaxiensimulation/)
+
+![](https://beltoforion.de/en/barnes-hut-galaxy-simulator/images/anim.gif)
