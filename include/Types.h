@@ -4,7 +4,6 @@
 
 #pragma pack(push, 1)
 
-//---------------------------------------------------------------------
 struct PODState
 {
   double x;
@@ -13,13 +12,11 @@ struct PODState
   double vy;
 };
 
-//---------------------------------------------------------------------
 struct PODAuxState
 {
   double mass;
 };
 
-//---------------------------------------------------------------------
 struct PODDeriv
 {
   double vx;
@@ -30,7 +27,6 @@ struct PODDeriv
 
 #pragma pack(pop)
 
-//---------------------------------------------------------------------
 struct ParticleData
 {
   ParticleData();
