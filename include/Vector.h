@@ -1,8 +1,6 @@
 #ifndef _VECTOR_H
 #define _VECTOR_H
 
-
-//------------------------------------------------------------------------------
 class Vec2D
 {
 public:
@@ -12,7 +10,7 @@ public:
   double y;
 };
 
-//------------------------------------------------------------------------------
+
 class Vec3D
 {
 public:
@@ -22,4 +20,5 @@ public:
   double y;
   double z;
 };
+
 #endif //_VECTOR_H
