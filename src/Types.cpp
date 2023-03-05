@@ -7,8 +7,8 @@
 
 //----------------------------------------------------------------------------------------
 ParticleData::ParticleData()
-  :m_pState(NULL)
-  ,m_pAuxState(NULL)
+  :m_pState(nullptr)
+  ,m_pAuxState(nullptr)
 {}
 
 //----------------------------------------------------------------------------------------
@@ -41,8 +41,8 @@ ParticleData& ParticleData::operator=(const ParticleData &ref)
 //----------------------------------------------------------------------------------------
 void ParticleData::Reset()
 {
-  m_pState    = NULL;
-  m_pAuxState = NULL;
+  m_pState    = nullptr;
+  m_pAuxState = nullptr;
 }
 
 //----------------------------------------------------------------------------------------

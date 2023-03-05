@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.cpp
- * Author: user
- * 
- * Created on 3. Mai 2009, 23:40
- */
-
 #include "IntegratorRKF4.h"
 
 //--- Standard includes --------------------------------------------------------
@@ -29,7 +22,7 @@ IntegratorRKF4::IntegratorRKF4(IModel *pModel, double h)
   ,m_error(new double [m_dim])
   ,m_maxErr(0.005)
 {
-  if (pModel==NULL)
+  if (pModel==nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   std::stringstream ss;

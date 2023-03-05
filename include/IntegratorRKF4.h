@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:40
- */
-
 #ifndef _INTEGRATOR_RKF4_H
 #define	_INTEGRATOR_RKF4_H
 
@@ -39,5 +32,5 @@ private:
   double m_maxErr;
 };
 
-#endif	/* _INTEGRATORHEUN_H */
+#endif
 

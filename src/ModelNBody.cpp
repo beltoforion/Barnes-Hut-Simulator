@@ -13,8 +13,8 @@ using namespace std;
 //------------------------------------------------------------------------
 ModelNBody::ModelNBody()
   :IModel("N-Body simulation (2D)")
-  ,m_pInitial(NULL)
-  ,m_pAux(NULL)
+  ,m_pInitial(nullptr)
+  ,m_pAux(nullptr)
   ,m_root(BHTreeNode(Vec2D(), Vec2D()))
   ,m_min()
   ,m_max()
@@ -347,8 +347,8 @@ void ModelNBody::Init3Body()
   // Reset model size
   ResetDim(3, .5);
   m_root.SetTheta(0.9);
-  PODState *st(NULL);
-  PODAuxState *st_aux(NULL);
+  PODState *st(nullptr);
+  PODAuxState *st_aux(nullptr);
 
   // initialize particles
   st     = &m_pInitial[0];

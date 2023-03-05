@@ -11,7 +11,7 @@ IntegratorEuler::IntegratorEuler(IModel *pModel, double h)
   :IIntegrator(pModel, h)
   ,m_state((pModel) ? new double [pModel->GetDim()] : NULL)
 {
-  if (pModel==NULL)
+  if (pModel==nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   std::stringstream ss;

@@ -9,12 +9,12 @@
 //------------------------------------------------------------------------------
 IntegratorRK3::IntegratorRK3(IModel *pModel, double h)
   :IIntegrator(pModel, h)
-  ,m_state((pModel) ? new double [pModel->GetDim()] : NULL)
-  ,m_k1((pModel) ? new double [pModel->GetDim()] : NULL)
-  ,m_k2((pModel) ? new double [pModel->GetDim()] : NULL)
-  ,m_k3((pModel) ? new double [pModel->GetDim()] : NULL)
+  ,m_state((pModel) ? new double [pModel->GetDim()] : nullptr)
+  ,m_k1((pModel) ? new double [pModel->GetDim()] : nullptr)
+  ,m_k2((pModel) ? new double [pModel->GetDim()] : nullptr)
+  ,m_k3((pModel) ? new double [pModel->GetDim()] : nullptr)
 {
-  if (pModel==NULL)
+  if (pModel==nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   std::stringstream ss;

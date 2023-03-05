@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdexcept": "cpp",
+        "cassert": "cpp",
+        "iosfwd": "cpp"
+    }
+}

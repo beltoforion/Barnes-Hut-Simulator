@@ -21,7 +21,7 @@ IntegratorHeun::IntegratorHeun(IModel *pModel, double h)
   ,m_k1(new double[m_dim])
   ,m_k2(new double[m_dim])
 {
-  if (pModel==NULL)
+  if (pModel==nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   std::stringstream ss;

@@ -19,7 +19,7 @@ IntegratorADB4::IntegratorADB4(IModel *pModel, double h)
 , m_state()
 , m_f()
 {
-  if (pModel == NULL)
+  if (pModel == nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   m_state = new double[m_dim];

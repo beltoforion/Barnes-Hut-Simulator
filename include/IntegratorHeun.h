@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:40
- */
-
 #ifndef _INTEGRATORHEUN_H
 #define	_INTEGRATORHEUN_H
 
@@ -31,5 +24,5 @@ private:
   double *m_k2;
 };
 
-#endif	/* _INTEGRATORHEUN_H */
+#endif
 

@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:40
- */
-
 #ifndef _INTEGRATOR_ADB3_H
 #define	_INTEGRATOR_ADB3_H
 
@@ -29,5 +22,5 @@ private:
   double *m_f[3];
 };
 
-#endif	/* _INTEGRATORHEUN_H */
+#endif
 

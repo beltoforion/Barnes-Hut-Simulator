@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.cpp
- * Author: user
- * 
- * Created on 3. Mai 2009, 23:40
- */
-
 #include "IntegratorADB6.h"
 
 //--- Standard includes --------------------------------------------------------
@@ -21,7 +14,7 @@ IntegratorADB6::IntegratorADB6(IModel *pModel, double h)
   ,m_state()
   ,m_f()
 {
-  if (pModel == NULL)
+  if (pModel == nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   m_c[0] =  4277.0 / 1440.0;

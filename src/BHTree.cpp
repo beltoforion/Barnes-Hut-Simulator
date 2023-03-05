@@ -37,16 +37,16 @@ BHTreeNode::BHTreeNode(const Vec2D &min,
 //------------------------------------------------------------------------------
 bool BHTreeNode::IsRoot() const
 {
-  return m_parent==NULL;
+  return m_parent==nullptr;
 }
 
 //------------------------------------------------------------------------------
 bool BHTreeNode::IsExternal() const
 {
-  return  m_quadNode[0]==NULL &&
-          m_quadNode[1]==NULL &&
-          m_quadNode[2]==NULL &&
-          m_quadNode[3]==NULL;
+  return  m_quadNode[0]==nullptr &&
+          m_quadNode[1]==nullptr &&
+          m_quadNode[2]==nullptr &&
+          m_quadNode[3]==nullptr;
 }
 
 //------------------------------------------------------------------------------
@@ -426,7 +426,7 @@ void BHTreeNode::Insert(const ParticleData &newParticle, int level)
       // There is already a particle
       // subdivide the node and relocate that particle
       EQuadrant eQuad = GetQuadrant(p2.x, p2.y);
-      if (m_quadNode[eQuad]==NULL)
+      if (m_quadNode[eQuad]==nullptr)
         m_quadNode[eQuad] = CreateQuadNode(eQuad);
       m_quadNode[eQuad]->Insert(m_particle, level+1);
       m_particle.Reset();

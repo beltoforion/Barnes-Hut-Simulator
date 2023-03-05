@@ -27,18 +27,18 @@ void SDLWindow::InitFont()
   s_fontBase = glGenLists(96);
 
   /* Get our current display long enough to get the fonts */
-  dpy = XOpenDisplay(NULL);
+  dpy = XOpenDisplay(nullptr);
 
   /* Get the font information */
   fontInfo = XLoadQueryFont(dpy, "-adobe-helvetica-medium-r-normal--18-*-*-*-p-*-iso8859-1" );
 
   /* If the above font didn't exist try one that should */
-  if (fontInfo == NULL)
+  if (fontInfo == nullptr)
   {
     fontInfo = XLoadQueryFont(dpy, "fixed");
 
     /* If that font doesn't exist, something is wrong */
-    if (fontInfo == NULL)
+    if (fontInfo == nullptr)
         throw std::runtime_error("no X font available?");
   }
 
@@ -66,7 +66,7 @@ void SDLWindow::TextOut(const char *fmt, ...)
   va_list ap;     /* Pointer to our list of elements */
 
   /* If there's no text, do nothing */
-  if (fmt == NULL)
+  if (fmt == nullptr)
     return;
 
   /* Parses The String For Variables */
@@ -92,7 +92,7 @@ void SDLWindow::TextOut(int x, int y, const char *fmt, ...)
   va_list ap;     /* Pointer to our list of elements */
 
   /* If there's no text, do nothing */
-  if (fmt == NULL)
+  if (fmt == nullptr)
     return;
 
   /* Parses The String For Variables */
@@ -145,8 +145,7 @@ SDLWindow::SDLWindow(int width, int height, double axisLen, const std::string &c
   ,m_camPos(0, 0, 2)
   ,m_camLookAt(0, 0, 0)
   ,m_camOrient(0, 1, 0)
-  ,m_pScreen(NULL)
-//  ,m_fontBase(0)
+  ,m_pScreen(nullptr)
   ,m_bRunning(true)
 {
   if (SDL_Init(SDL_INIT_VIDEO) == -1)
@@ -213,9 +212,9 @@ void SDLWindow::SaveToTGA(const std::string &sName)
   else
   {
     // use default name with time stamp
-    time_t t = time(NULL);
+    time_t t = time(nullptr);
     struct tm *tmp = localtime(&t);
-    if (tmp==NULL)
+    if (tmp==nullptr)
       sFile = "snapshot.tga";
     else
     {
@@ -375,7 +374,7 @@ void SDLWindow::MainLoop()
 {
   int ct = 0;
   double dt = 0;
-  time_t t1(time(NULL)), t2;
+  time_t t1(time(nullptr)), t2;
 
   while (m_bRunning)
   {
@@ -383,7 +382,7 @@ void SDLWindow::MainLoop()
     PollEvents();
     ++ct;
 
-    t2 = time(NULL);
+    t2 = time(nullptr);
     dt = difftime(t2, t1);
     if (dt>1)
     {

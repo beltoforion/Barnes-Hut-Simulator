@@ -18,7 +18,7 @@ IntegratorRK5::IntegratorRK5(IModel *pModel, double h)
   ,m_k5(new double [m_dim])
   ,m_k6(new double [m_dim])
 {
-  if (pModel==NULL)
+  if (pModel==nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   std::stringstream ss;

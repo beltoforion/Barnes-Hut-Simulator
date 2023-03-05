@@ -17,8 +17,8 @@
 //------------------------------------------------------------------------------
 NBodyWnd::NBodyWnd(int sz, std::string caption)
   :SDLWindow(sz, sz, 30.0, caption)
-  ,m_pModel(NULL)
-  ,m_pSolver(NULL)
+  ,m_pModel(nullptr)
+  ,m_pSolver(nullptr)
   ,m_camOrient(0)
   ,m_flags(dspBODIES | /*dspTREE |*/ dspAXIS | dspSTAT | dspVERBOSE)
   ,m_bDumpState(false)

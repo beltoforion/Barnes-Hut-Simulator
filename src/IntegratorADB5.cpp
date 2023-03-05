@@ -15,7 +15,7 @@ IntegratorADB5::IntegratorADB5(IModel *pModel, double h)
   ,m_f()
   ,m_rk4(pModel, h)
 {
-  if (pModel == NULL)
+  if (pModel == nullptr)
     throw std::runtime_error("Model pointer may not be NULL.");
 
   m_c[0] = 1901.0 / 720.0;
