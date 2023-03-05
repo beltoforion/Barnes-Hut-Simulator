@@ -201,54 +201,6 @@ src/IModel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IModel.cpp.s
 .PHONY : src/IModel.cpp.s
 
-src/IntegratorADB2.o: src/IntegratorADB2.cpp.o
-.PHONY : src/IntegratorADB2.o
-
-# target to build an object file
-src/IntegratorADB2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB2.cpp.o
-.PHONY : src/IntegratorADB2.cpp.o
-
-src/IntegratorADB2.i: src/IntegratorADB2.cpp.i
-.PHONY : src/IntegratorADB2.i
-
-# target to preprocess a source file
-src/IntegratorADB2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB2.cpp.i
-.PHONY : src/IntegratorADB2.cpp.i
-
-src/IntegratorADB2.s: src/IntegratorADB2.cpp.s
-.PHONY : src/IntegratorADB2.s
-
-# target to generate assembly for a file
-src/IntegratorADB2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB2.cpp.s
-.PHONY : src/IntegratorADB2.cpp.s
-
-src/IntegratorADB3.o: src/IntegratorADB3.cpp.o
-.PHONY : src/IntegratorADB3.o
-
-# target to build an object file
-src/IntegratorADB3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB3.cpp.o
-.PHONY : src/IntegratorADB3.cpp.o
-
-src/IntegratorADB3.i: src/IntegratorADB3.cpp.i
-.PHONY : src/IntegratorADB3.i
-
-# target to preprocess a source file
-src/IntegratorADB3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB3.cpp.i
-.PHONY : src/IntegratorADB3.cpp.i
-
-src/IntegratorADB3.s: src/IntegratorADB3.cpp.s
-.PHONY : src/IntegratorADB3.s
-
-# target to generate assembly for a file
-src/IntegratorADB3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB3.cpp.s
-.PHONY : src/IntegratorADB3.cpp.s
-
 src/IntegratorADB4.o: src/IntegratorADB4.cpp.o
 .PHONY : src/IntegratorADB4.o
 
@@ -320,102 +272,6 @@ src/IntegratorADB6.s: src/IntegratorADB6.cpp.s
 src/IntegratorADB6.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorADB6.cpp.s
 .PHONY : src/IntegratorADB6.cpp.s
-
-src/IntegratorEuler.o: src/IntegratorEuler.cpp.o
-.PHONY : src/IntegratorEuler.o
-
-# target to build an object file
-src/IntegratorEuler.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorEuler.cpp.o
-.PHONY : src/IntegratorEuler.cpp.o
-
-src/IntegratorEuler.i: src/IntegratorEuler.cpp.i
-.PHONY : src/IntegratorEuler.i
-
-# target to preprocess a source file
-src/IntegratorEuler.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorEuler.cpp.i
-.PHONY : src/IntegratorEuler.cpp.i
-
-src/IntegratorEuler.s: src/IntegratorEuler.cpp.s
-.PHONY : src/IntegratorEuler.s
-
-# target to generate assembly for a file
-src/IntegratorEuler.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorEuler.cpp.s
-.PHONY : src/IntegratorEuler.cpp.s
-
-src/IntegratorEulerImproved.o: src/IntegratorEulerImproved.cpp.o
-.PHONY : src/IntegratorEulerImproved.o
-
-# target to build an object file
-src/IntegratorEulerImproved.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorEulerImproved.cpp.o
-.PHONY : src/IntegratorEulerImproved.cpp.o
-
-src/IntegratorEulerImproved.i: src/IntegratorEulerImproved.cpp.i
-.PHONY : src/IntegratorEulerImproved.i
-
-# target to preprocess a source file
-src/IntegratorEulerImproved.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorEulerImproved.cpp.i
-.PHONY : src/IntegratorEulerImproved.cpp.i
-
-src/IntegratorEulerImproved.s: src/IntegratorEulerImproved.cpp.s
-.PHONY : src/IntegratorEulerImproved.s
-
-# target to generate assembly for a file
-src/IntegratorEulerImproved.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorEulerImproved.cpp.s
-.PHONY : src/IntegratorEulerImproved.cpp.s
-
-src/IntegratorHeun.o: src/IntegratorHeun.cpp.o
-.PHONY : src/IntegratorHeun.o
-
-# target to build an object file
-src/IntegratorHeun.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorHeun.cpp.o
-.PHONY : src/IntegratorHeun.cpp.o
-
-src/IntegratorHeun.i: src/IntegratorHeun.cpp.i
-.PHONY : src/IntegratorHeun.i
-
-# target to preprocess a source file
-src/IntegratorHeun.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorHeun.cpp.i
-.PHONY : src/IntegratorHeun.cpp.i
-
-src/IntegratorHeun.s: src/IntegratorHeun.cpp.s
-.PHONY : src/IntegratorHeun.s
-
-# target to generate assembly for a file
-src/IntegratorHeun.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorHeun.cpp.s
-.PHONY : src/IntegratorHeun.cpp.s
-
-src/IntegratorRK3.o: src/IntegratorRK3.cpp.o
-.PHONY : src/IntegratorRK3.o
-
-# target to build an object file
-src/IntegratorRK3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorRK3.cpp.o
-.PHONY : src/IntegratorRK3.cpp.o
-
-src/IntegratorRK3.i: src/IntegratorRK3.cpp.i
-.PHONY : src/IntegratorRK3.i
-
-# target to preprocess a source file
-src/IntegratorRK3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorRK3.cpp.i
-.PHONY : src/IntegratorRK3.cpp.i
-
-src/IntegratorRK3.s: src/IntegratorRK3.cpp.s
-.PHONY : src/IntegratorRK3.s
-
-# target to generate assembly for a file
-src/IntegratorRK3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/barnes-hut-simulator.dir/build.make CMakeFiles/barnes-hut-simulator.dir/src/IntegratorRK3.cpp.s
-.PHONY : src/IntegratorRK3.cpp.s
 
 src/IntegratorRK4.o: src/IntegratorRK4.cpp.o
 .PHONY : src/IntegratorRK4.o
@@ -651,12 +507,6 @@ help:
 	@echo "... src/IModel.o"
 	@echo "... src/IModel.i"
 	@echo "... src/IModel.s"
-	@echo "... src/IntegratorADB2.o"
-	@echo "... src/IntegratorADB2.i"
-	@echo "... src/IntegratorADB2.s"
-	@echo "... src/IntegratorADB3.o"
-	@echo "... src/IntegratorADB3.i"
-	@echo "... src/IntegratorADB3.s"
 	@echo "... src/IntegratorADB4.o"
 	@echo "... src/IntegratorADB4.i"
 	@echo "... src/IntegratorADB4.s"
@@ -666,18 +516,6 @@ help:
 	@echo "... src/IntegratorADB6.o"
 	@echo "... src/IntegratorADB6.i"
 	@echo "... src/IntegratorADB6.s"
-	@echo "... src/IntegratorEuler.o"
-	@echo "... src/IntegratorEuler.i"
-	@echo "... src/IntegratorEuler.s"
-	@echo "... src/IntegratorEulerImproved.o"
-	@echo "... src/IntegratorEulerImproved.i"
-	@echo "... src/IntegratorEulerImproved.s"
-	@echo "... src/IntegratorHeun.o"
-	@echo "... src/IntegratorHeun.i"
-	@echo "... src/IntegratorHeun.s"
-	@echo "... src/IntegratorRK3.o"
-	@echo "... src/IntegratorRK3.i"
-	@echo "... src/IntegratorRK3.s"
 	@echo "... src/IntegratorRK4.o"
 	@echo "... src/IntegratorRK4.i"
 	@echo "... src/IntegratorRK4.s"

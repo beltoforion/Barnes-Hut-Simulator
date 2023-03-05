@@ -1,10 +1,3 @@
-/*
- * File:   NBodyWnd.h
- * Author: user
- *
- * Created on 8. Juli 2009, 21:54
- */
-
 #ifndef _NBODYWND_H
 #define	_NBODYWND_H
 
@@ -18,7 +11,7 @@
 #include "IIntegrator.h"
 
 
-//------------------------------------------------------------------------------
+
 /** \brief Main window of th n-body simulation. */
 class NBodyWnd : public SDLWindow
 {
@@ -28,6 +21,7 @@ public:
     virtual ~NBodyWnd();
 
     virtual void Render();
+    virtual void Update();
     virtual void OnProcessEvents(uint8_t type);
 
     void Init(int num);
@@ -65,10 +59,10 @@ private:
 
     int m_camOrient;    ///< Index of the camera orientation to use
     uint32_t m_flags;   ///< The display flags
-    bool m_bDumpState;
-    bool m_bDumpImage;
+    bool m_bDumpState = false; 
+    bool m_bDumpImage = false;
     std::ofstream m_outfile;
 };
 
-#endif	/* _NBODYWND_H */
+#endif
 

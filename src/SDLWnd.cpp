@@ -378,10 +378,13 @@ void SDLWindow::MainLoop()
 
   while (m_bRunning)
   {
-    Render();
-    PollEvents();
     ++ct;
 
+    Update();
+    Render();
+
+    PollEvents();
+  
     t2 = time(nullptr);
     dt = difftime(t2, t1);
     if (dt>1)

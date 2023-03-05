@@ -10,7 +10,6 @@
 using namespace std;
 
 
-//------------------------------------------------------------------------
 ModelNBody::ModelNBody()
   :IModel("N-Body simulation (2D)")
   ,m_pInitial(nullptr)
@@ -26,69 +25,69 @@ ModelNBody::ModelNBody()
   ,mass_sun(1.988435e30)
   ,pc_in_m(3.08567758129e16)
   ,gamma_si(6.67428e-11)
-  ,gamma_1(gamma_si/(pc_in_m*pc_in_m*pc_in_m)*mass_sun*(365.25*86400)*(365.25*86400))
-  ,time_1(sqrt( (pc_in_m*pc_in_m*pc_in_m)/(gamma_si*mass_sun) ) / (365.25*86400))
+  ,gamma_1(gamma_si / (pc_in_m * pc_in_m * pc_in_m) * mass_sun * (365.25 * 86400) * (365.25 * 86400))
+  ,time_1(sqrt((pc_in_m * pc_in_m * pc_in_m) / (gamma_si * mass_sun)) / (365.25 * 86400))
   ,m_num(0)
   ,m_bVerbose(false)
 {
   BHTreeNode::s_gamma = gamma_1;
 
-//  Init();
+  //  Init();
   InitCollision();
-//  Init3Body();
+  //  Init3Body();
 }
 
-//------------------------------------------------------------------------
+
 ModelNBody::~ModelNBody()
 {
   delete m_pInitial;
   delete m_pAux;
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::SetROI(double roi)
 {
   m_roi = roi;
 }
 
-//------------------------------------------------------------------------
+
 double ModelNBody::GetSuggestedTimeStep() const
 {
   return m_timeStep;
 }
 
-//------------------------------------------------------------------------
+
 double ModelNBody::GetROI() const
 {
   return m_roi;
 }
 
-//------------------------------------------------------------------------
+
 Vec3D ModelNBody::GetCenterOfMass() const
 {
   const Vec2D &cm2d = m_root.GetCenterOfMass();
   return Vec3D(cm2d.x, cm2d.y, 0);
 }
 
-//------------------------------------------------------------------------
-const Vec3D& ModelNBody::GetCamDir() const
+
+const Vec3D &ModelNBody::GetCamDir() const
 {
   return m_camDir;
 }
 
-//------------------------------------------------------------------------
-const Vec3D& ModelNBody::GetCamPos() const
+
+const Vec3D &ModelNBody::GetCamPos() const
 {
   return m_camPos;
 }
 
-//------------------------------------------------------------------------
-double* ModelNBody::GetInitialState()
+
+double *ModelNBody::GetInitialState()
 {
-  return reinterpret_cast<double*>(m_pInitial);
+  return reinterpret_cast<double *>(m_pInitial);
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::GetOrbitalVelocity(const ParticleData &p1, const ParticleData &p2)
 {
   double x1 = p1.m_pState->x,
@@ -111,15 +110,15 @@ void ModelNBody::GetOrbitalVelocity(const ParticleData &p1, const ParticleData &
   // Calculate a suitable vector perpendicular to r for the velocity of the tracer
   double &vx = p2.m_pState->vx,
          &vy = p2.m_pState->vy;
-  vx = ( r[1] / dist) * v;
+  vx = (r[1] / dist) * v;
   vy = (-r[0] / dist) * v;
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::ResetDim(int num, double stepsize)
 {
   m_num = num;
-  SetDim(m_num*4);
+  SetDim(m_num * 4);
 
   delete m_pInitial;
   m_pInitial = new PODState[num];
@@ -132,43 +131,44 @@ void ModelNBody::ResetDim(int num, double stepsize)
   // reset bounding box and center
   m_max.x = m_max.y = std::numeric_limits<double>::min();
   m_min.x = m_min.y = std::numeric_limits<double>::max();
-  m_center = Vec2D(0,0);    // for storing the center of mass
+  m_center = Vec2D(0, 0); // for storing the center of mass
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::Init()
 {
   // Reset model size
-  ResetDim(4000, 100000);
+  const int numStars = 5000;
+  ResetDim(5000, 100000);
 
-  double mass = 0;  // for storing the total mass
+  double mass = 0; // for storing the total mass
 
   // initialize particles
   int ct = 0;
   ParticleData blackHole, macho[10];
 
-  for (int k=0; k<40; ++k)
+  for (int k = 0; k < 40; ++k)
   {
-    for (int l=0; l<100; ++l)
+    for (int l = 0; l < 100; ++l)
     {
-      if (ct>=m_num)
+      if (ct >= m_num)
         goto hell;
 
-      PODState &st        = m_pInitial[ct];
+      PODState &st = m_pInitial[ct];
       PODAuxState &st_aux = m_pAux[ct];
 
-      if (ct==0)
+      if (ct == 0)
       {
         blackHole.m_pState = &st;
         blackHole.m_pAuxState = &st_aux;
 
         // particle zero is special its the trace particle that is not part
         // of the simulation and can be positioned with the mouse
-        st.x  = st.y = 0;
+        st.x = st.y = 0;
         st.vx = st.vy = 0;
-        st_aux.mass = 1000000; //431000;   // 4.31 Millionen Sonnenmassen
+        st_aux.mass = 1000000; // 431000;   // 4.31 Millionen Sonnenmassen
       }
-      else if (ct==1)
+      else if (ct == 1)
       {
         // macho im galaktischen halo, der hoffentlich ein paar spiralarme erzeugt
         macho[0].m_pState = &st;
@@ -182,7 +182,7 @@ void ModelNBody::Init()
 
         GetOrbitalVelocity(blackHole, ParticleData(&st, &st_aux));
       }
-      else if (ct==2)
+      else if (ct == 2)
       {
         // macho im galaktischen halo, der hoffentlich ein paar spiralarme erzeugt
         macho[1].m_pState = &st;
@@ -199,9 +199,9 @@ void ModelNBody::Init()
       else
       {
         st_aux.mass = 0.76 + 100 * ((double)rand() / RAND_MAX);
-        double rad = 1200 + k*100;
-        st.x = rad*sin(2*M_PI * l/100.0);
-        st.y = rad*cos(2*M_PI * l/100.0);
+        double rad = 1200 + k * 100;
+        st.x = rad * sin(2 * M_PI * l / 100.0);
+        st.y = rad * cos(2 * M_PI * l / 100.0);
         GetOrbitalVelocity(blackHole, ParticleData(&st, &st_aux));
       }
 
@@ -216,10 +216,9 @@ void ModelNBody::Init()
       mass += st_aux.mass;
       ++ct;
     }
-
   }
 
-  hell:
+hell:
 
   // compute the center of mass
   m_center.x /= mass;
@@ -227,8 +226,8 @@ void ModelNBody::Init()
 
   // The Barnes Hut algorithm needs square shaped quadrants.
   // calculate the height of the square including all particles (and a bit more space)
-  m_roi  = 1.5 * std::max(m_max.x - m_min.x,
-                          m_max.y - m_min.y);
+  m_roi = 1.5 * std::max(m_max.x - m_min.x,
+                         m_max.y - m_min.y);
 
   // compute the center of the region including all particles
   m_min.x = m_center.x - m_roi;
@@ -242,12 +241,11 @@ void ModelNBody::Init()
   std::cout << "  xmin   = " << m_min.x << ", ymin=" << m_min.y << "\n";
   std::cout << "  xmax   = " << m_max.y << ", ymax=" << m_max.y << "\n";
   std::cout << "Bounding box:\n";
-  std::cout << "  center = " << m_center.x   << ", cy  =" << m_center.y   << "\n";
+  std::cout << "  center = " << m_center.x << ", cy  =" << m_center.y << "\n";
   std::cout << "  roi    = " << m_roi << "\n";
 }
 
 
-//------------------------------------------------------------------------
 void ModelNBody::InitCollision()
 {
   // Reset model size
@@ -257,34 +255,34 @@ void ModelNBody::InitCollision()
   ParticleData blackHole;
   ParticleData blackHole2;
 
-  for (int i=0; i<m_num; ++i)
+  for (int i = 0; i < m_num; ++i)
   {
-    PODState &st        = m_pInitial[i];
+    PODState &st = m_pInitial[i];
     PODAuxState &st_aux = m_pAux[i];
 
-    if (i==0)
+    if (i == 0)
     {
       // particle zero is special its the trace particle that is not part
       // of the simulation and can be positioned with the mouse
       blackHole.m_pState = &st;
       blackHole.m_pAuxState = &st_aux;
 
-      st.x  = st.y = 0;
+      st.x = st.y = 0;
       st.vx = st.vy = 0;
-      st_aux.mass = 1000000; //431000;   // 4.31 Millionen Sonnenmassen
+      st_aux.mass = 1000000; // 431000;   // 4.31 Millionen Sonnenmassen
     }
-    else if (i<4000)
+    else if (i < 4000)
     {
       const double rad = 10;
       double r = 0.1 + .8 * (rad * ((double)rand() / RAND_MAX));
-      double a = 2.0*M_PI*((double)rand() / RAND_MAX);
+      double a = 2.0 * M_PI * ((double)rand() / RAND_MAX);
       st_aux.mass = 0.03 + 20 * ((double)rand() / RAND_MAX);
-      st.x = r*sin(a);
-      st.y = r*cos(a);
+      st.x = r * sin(a);
+      st.y = r * cos(a);
 
       GetOrbitalVelocity(blackHole, ParticleData(&st, &st_aux));
     }
-    else if (i==4000)
+    else if (i == 4000)
     {
       blackHole2.m_pState = &st;
       blackHole2.m_pAuxState = &st_aux;
@@ -298,15 +296,15 @@ void ModelNBody::InitCollision()
     else
     {
       const double rad = 3;
-      double r = 0.1 + .8 *  (rad * ((double)rand() / RAND_MAX));
-      double a = 2.0*M_PI*((double)rand() / RAND_MAX);
+      double r = 0.1 + .8 * (rad * ((double)rand() / RAND_MAX));
+      double a = 2.0 * M_PI * ((double)rand() / RAND_MAX);
       st_aux.mass = 0.03 + 20 * ((double)rand() / RAND_MAX);
-      st.x = blackHole2.m_pState->x + r*sin(a);
-      st.y = blackHole2.m_pState->y + r*cos(a);
+      st.x = blackHole2.m_pState->x + r * sin(a);
+      st.y = blackHole2.m_pState->y + r * cos(a);
 
       GetOrbitalVelocity(blackHole2, ParticleData(&st, &st_aux));
-      st.vx+=blackHole2.m_pState->vx;
-      st.vy+=blackHole2.m_pState->vy;
+      st.vx += blackHole2.m_pState->vx;
+      st.vy += blackHole2.m_pState->vy;
     }
 
     // determine the size of the area including all particles
@@ -324,12 +322,12 @@ void ModelNBody::InitCollision()
   m_roi = l * 1.5;
 
   // compute the center of the region including all particles
-  Vec2D c(m_min.x + (m_max.x - m_min.x)/2.0,
-          m_min.y + (m_max.y - m_min.y)/2.0);
-  m_min.x = c.x - l/2.0;
-  m_max.x = c.x + l/2.0;
-  m_min.y = c.y - l/2.0;
-  m_max.y = c.y + l/2.0;
+  Vec2D c(m_min.x + (m_max.x - m_min.x) / 2.0,
+          m_min.y + (m_max.y - m_min.y) / 2.0);
+  m_min.x = c.x - l / 2.0;
+  m_max.x = c.x + l / 2.0;
+  m_min.y = c.y - l / 2.0;
+  m_max.y = c.y + l / 2.0;
 
   std::cout << "Initial particle distribution area\n";
   std::cout << "----------------------------------\n";
@@ -337,11 +335,11 @@ void ModelNBody::InitCollision()
   std::cout << "  xmin=" << m_min.x << ", ymin=" << m_min.y << "\n";
   std::cout << "  xmax=" << m_max.y << ", ymax=" << m_max.y << "\n";
   std::cout << "Bounding box:\n";
-  std::cout << "  cx =" << c.x   << ", cy  =" << c.y   << "\n";
+  std::cout << "  cx =" << c.x << ", cy  =" << c.y << "\n";
   std::cout << "  l  =" << l << "\n";
 }
 
-//------------------------------------------------------------------------------
+
 void ModelNBody::Init3Body()
 {
   // Reset model size
@@ -351,31 +349,31 @@ void ModelNBody::Init3Body()
   PODAuxState *st_aux(nullptr);
 
   // initialize particles
-  st     = &m_pInitial[0];
+  st = &m_pInitial[0];
   st_aux = &m_pAux[0];
-  st->x  = 1;
-  st->y  = 3;
+  st->x = 1;
+  st->y = 3;
   st->vx = st->vy = 0;
   st_aux->mass = 3;
 
-  st     = &m_pInitial[1];
+  st = &m_pInitial[1];
   st_aux = &m_pAux[1];
-  st->x  = -2;
-  st->y  = -1;
+  st->x = -2;
+  st->y = -1;
   st->vx = st->vy = 0;
   st_aux->mass = 4;
 
-  st     = &m_pInitial[2];
+  st = &m_pInitial[2];
   st_aux = &m_pAux[2];
-  st->x   =  1;
-  st->y   = -1;
-  st->vx  = st->vy = 0;
+  st->x = 1;
+  st->y = -1;
+  st->vx = st->vy = 0;
   st_aux->mass = 5;
 
   // determine the size of the area including all particles
-  for (int i=0; i<m_num; ++i)
+  for (int i = 0; i < m_num; ++i)
   {
-    PODState &st        = m_pInitial[i];
+    PODState &st = m_pInitial[i];
     m_max.x = std::max(m_max.x, st.x);
     m_max.y = std::max(m_max.y, st.y);
     m_min.x = std::min(m_min.x, st.x);
@@ -390,12 +388,12 @@ void ModelNBody::Init3Body()
   m_roi = l * 1.5;
 
   // compute the center of the region including all particles
-  Vec2D c(m_min.x + (m_max.x - m_min.x)/2.0,
-          m_min.y + (m_max.y - m_min.y)/2.0);
-  m_min.x = c.x - l/2.0;
-  m_max.x = c.x + l/2.0;
-  m_min.y = c.y - l/2.0;
-  m_max.y = c.y + l/2.0;
+  Vec2D c(m_min.x + (m_max.x - m_min.x) / 2.0,
+          m_min.y + (m_max.y - m_min.y) / 2.0);
+  m_min.x = c.x - l / 2.0;
+  m_max.x = c.x + l / 2.0;
+  m_min.y = c.y - l / 2.0;
+  m_max.y = c.y + l / 2.0;
 
   std::cout << "Initial particle distribution area\n";
   std::cout << "----------------------------------\n";
@@ -403,45 +401,45 @@ void ModelNBody::Init3Body()
   std::cout << "  xmin=" << m_min.x << ", ymin=" << m_min.y << "\n";
   std::cout << "  xmax=" << m_max.y << ", ymax=" << m_max.y << "\n";
   std::cout << "Bounding box:\n";
-  std::cout << "  cx =" << c.x   << ", cy  =" << c.y   << "\n";
+  std::cout << "  cx =" << c.x << ", cy  =" << c.y << "\n";
   std::cout << "  l  =" << l << "\n";
 }
 
-//------------------------------------------------------------------------------
+
 void ModelNBody::CalcBHArea(const ParticleData &data)
 {
-/*
-  // reset bounding box
-  m_max.x = m_max.y = std::numeric_limits<double>::min();
-  m_min.x = m_min.y = std::numeric_limits<double>::max();
+  /*
+    // reset bounding box
+    m_max.x = m_max.y = std::numeric_limits<double>::min();
+    m_min.x = m_min.y = std::numeric_limits<double>::max();
 
-  for (int i=0; i<m_num; ++i)
-  {
-    PODState &s = data.m_pState[i];
+    for (int i=0; i<m_num; ++i)
+    {
+      PODState &s = data.m_pState[i];
 
-    // determine the size of the area including all particles
-    m_max.x = std::max(m_max.x, s.x);
-    m_max.y = std::max(m_max.y, s.y);
-    m_min.x = std::min(m_min.x, s.x);
-    m_min.y = std::min(m_min.y, s.y);
-  }
+      // determine the size of the area including all particles
+      m_max.x = std::max(m_max.x, s.x);
+      m_max.y = std::max(m_max.y, s.y);
+      m_min.x = std::min(m_min.x, s.x);
+      m_min.y = std::min(m_min.y, s.y);
+    }
 
-  // The Barnes Hut algorithm needs square shaped quadrants.
-  // calculate the height of the square including all particles (and a bit more space)
-  double l = 1.05 * std::max(m_max.x - m_min.x,
-                             m_max.y - m_min.y);
+    // The Barnes Hut algorithm needs square shaped quadrants.
+    // calculate the height of the square including all particles (and a bit more space)
+    double l = 1.05 * std::max(m_max.x - m_min.x,
+                               m_max.y - m_min.y);
 
-  // compute the center of the region including all particles
-  Vec2D c(m_min.x + (m_max.x - m_min.x)/2.0,
-          m_min.y + (m_max.y - m_min.y)/2.0);
-  m_min.x = c.x - l/2.0;
-  m_max.x = c.x + l/2.0;
-  m_min.y = c.y - l/2.0;
-  m_max.y = c.y + l/2.0;
-*/
+    // compute the center of the region including all particles
+    Vec2D c(m_min.x + (m_max.x - m_min.x)/2.0,
+            m_min.y + (m_max.y - m_min.y)/2.0);
+    m_min.x = c.x - l/2.0;
+    m_max.x = c.x + l/2.0;
+    m_min.y = c.y - l/2.0;
+    m_max.y = c.y + l/2.0;
+  */
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Build the barnes hut tree by adding all particles that are inside
            the region of interest.
 */
@@ -455,9 +453,9 @@ void ModelNBody::BuiltTree(const ParticleData &all)
 
   // build the quadtree
   int ct = 0;
-  for (int i=0; i<m_num; ++i)
+  for (int i = 0; i < m_num; ++i)
   {
-//    PODState *st = &(all.m_pState[i]);
+    //    PODState *st = &(all.m_pState[i]);
 
     try
     {
@@ -469,18 +467,18 @@ void ModelNBody::BuiltTree(const ParticleData &all)
       m_root.Insert(p, 0);
       ++ct;
     }
-    catch(std::exception &exc)
+    catch (std::exception &exc)
     {
-/*
-      std::cout << exc.what() << "\n";
-      std::cout << "Particle " << i << " (" << st->x << ", " << st->y << ") is outside the roi (skipped).\n";
-      std::cout << "  roi size   =   " << m_roi << "\n";
-      std::cout << "  roi center = (" << m_center.x << ", " << m_center.y << ")\n";
-*/
+      /*
+            std::cout << exc.what() << "\n";
+            std::cout << "Particle " << i << " (" << st->x << ", " << st->y << ") is outside the roi (skipped).\n";
+            std::cout << "  roi size   =   " << m_roi << "\n";
+            std::cout << "  roi center = (" << m_center.x << ", " << m_center.y << ")\n";
+      */
     }
   }
 
-//  std::cout << ct << " particles added sucessfully\n";
+  //  std::cout << ct << " particles added sucessfully\n";
 
   // compute masses and center of mass on all scales of the tree
   m_root.ComputeMassDistribution();
@@ -496,62 +494,62 @@ void ModelNBody::BuiltTree(const ParticleData &all)
   m_center = m_root.GetCenterOfMass();
 }
 
-//------------------------------------------------------------------------
-const PODAuxState* ModelNBody::GetAuxState() const
+
+const PODAuxState *ModelNBody::GetAuxState() const
 {
   return m_pAux;
 }
 
-//------------------------------------------------------------------------
-BHTreeNode* ModelNBody::GetRootNode()
+
+BHTreeNode *ModelNBody::GetRootNode()
 {
   return &m_root;
 }
 
-//------------------------------------------------------------------------
+
 int ModelNBody::GetN() const
 {
   return m_num;
 }
 
-//------------------------------------------------------------------------
+
 double ModelNBody::GetTheta() const
 {
   return m_root.GetTheta();
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::SetVerbose(bool bVerbose)
 {
   m_bVerbose = bVerbose;
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::SetTheta(double theta)
 {
   m_root.SetTheta(theta);
 }
 
-//------------------------------------------------------------------------
+
 double ModelNBody::GetTimeUnit() const
 {
   return time_1;
 }
 
-//------------------------------------------------------------------------
+
 void ModelNBody::Eval(double *a_state, double a_time, double *a_deriv)
 {
   // wrap the complete particle data together for easier treatment
   // in the following algorithms
-  PODState *pState = reinterpret_cast<PODState*>(a_state);
-  PODDeriv *pDeriv = reinterpret_cast<PODDeriv*>(a_deriv);
+  PODState *pState = reinterpret_cast<PODState *>(a_state);
+  PODDeriv *pDeriv = reinterpret_cast<PODDeriv *>(a_deriv);
   ParticleData all(pState, m_pAux);
 
   CalcBHArea(all);
   BuiltTree(all);
 
   #pragma omp parallel for
-  for (int i=1; i<m_num; ++i)
+  for (int i = 1; i < m_num; ++i)
   {
     ParticleData p(&pState[i], &m_pAux[i]);
     Vec2D acc = m_root.CalcForce(p);
@@ -572,15 +570,14 @@ void ModelNBody::Eval(double *a_state, double a_time, double *a_deriv)
   pDeriv[0].vx = pState[0].vx;
   pDeriv[0].vy = pState[0].vy;
 
-
   // Save vectors for camera orientations
-//  m_camDir.x = pState[0].x - pState[4000].x;
-//  m_camDir.y = pState[0].y - pState[4000].y;
+  //  m_camDir.x = pState[0].x - pState[4000].x;
+  //  m_camDir.y = pState[0].y - pState[4000].y;
   m_camPos.x = m_root.GetCenterOfMass().x;
   m_camPos.y = m_root.GetCenterOfMass().y;
 }
 
-//------------------------------------------------------------------------
+
 bool ModelNBody::IsFinished(double *state)
 {
   return false;

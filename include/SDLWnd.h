@@ -14,7 +14,6 @@
 #include "Vector.h"
 
 
-//------------------------------------------------------------------------------
 /** \brief Basic infrastructure for grafical output using SDL/OpenGL */
 class SDLWindow
 {
@@ -28,6 +27,7 @@ public:
   int GetWidth() const;
   int GetHeight() const;
   virtual void Render() = 0;
+  virtual void Update() = 0;
 
 protected:
 
@@ -86,7 +86,6 @@ private:
   Vec3D m_camOrient; ///< orientation of the camera (rotation as it aims at its target)
 
   SDL_Surface *m_pScreen;
-//  GLuint m_fontBase;
 
   volatile bool m_bRunning;
 };

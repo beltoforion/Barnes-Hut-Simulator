@@ -41,15 +41,9 @@ set(SOURCES
     src/BHTree.cpp
     src/IIntegrator.cpp
     src/IModel.cpp
-    src/IntegratorADB2.cpp
-    src/IntegratorADB3.cpp
     src/IntegratorADB4.cpp
     src/IntegratorADB5.cpp
     src/IntegratorADB6.cpp
-    src/IntegratorEuler.cpp
-    src/IntegratorEulerImproved.cpp
-    src/IntegratorHeun.cpp
-    src/IntegratorRK3.cpp
     src/IntegratorRK4.cpp
     src/IntegratorRK5.cpp
     src/IntegratorRKF4.cpp
