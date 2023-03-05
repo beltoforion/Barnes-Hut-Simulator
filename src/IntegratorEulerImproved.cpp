@@ -1,10 +1,3 @@
-/* 
- * File:   integratoreulerimproved.cpp
- * Author: user
- * 
- * Created on 3. Mai 2009, 23:24
- */
-
 #include "IntegratorEulerImproved.h"
 
 //--- Standard includes --------------------------------------------------------

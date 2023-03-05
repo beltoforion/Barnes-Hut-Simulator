@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.cpp
- * Author: user
- * 
- * Created on 3. Mai 2009, 23:40
- */
-
 #include "IntegratorRK3.h"
 
 //--- Standard includes --------------------------------------------------------

@@ -1,10 +1,3 @@
-/* 
- * File:   integratorheun.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:40
- */
-
 #ifndef _INTEGRATOR_ADB4_H
 #define	_INTEGRATOR_ADB4_H
 

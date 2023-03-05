@@ -1,9 +1,3 @@
-/*
- * File:   NBodyWnd.cpp
- * Author: user
- *
- * Created on 8. Juli 2009, 21:54
- */
 #include "NBodyWnd.h"
 
 //--- Standard icludes ---------------------------------------------------------

@@ -1,10 +1,3 @@
-/*
- * File:   main.cpp
- * Author: user
- *
- * Created on 5. Juli 2009, 22:15
- */
-
 #include <cstdlib>
 #include <iostream>
 

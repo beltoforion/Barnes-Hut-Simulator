@@ -1,10 +1,3 @@
-/* 
- * File:   iintegrator.h
- * Author: user
- *
- * Created on 30. April 2009, 00:30
- */
-
 #ifndef _IINTEGRATOR_H
 #define	_IINTEGRATOR_H
 

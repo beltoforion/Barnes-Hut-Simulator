@@ -1,17 +1,9 @@
-/* 
- * File:   integratorheun.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:40
- */
-
 #ifndef _INTEGRATOR_RK5_H
 #define	_INTEGRATOR_RK5_H
 
 #include "IIntegrator.h"
 
 
-//------------------------------------------------------------------------------
 /** \brief Inplementation of the simple Euler integration scheme. */
 class IntegratorRK5 : public IIntegrator
 {
@@ -35,5 +27,5 @@ private:
   double *m_k6;
 };
 
-#endif	/* _INTEGRATORHEUN_H */
+#endif
 

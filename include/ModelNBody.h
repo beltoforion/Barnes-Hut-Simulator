@@ -1,10 +1,3 @@
-/*
- * File:   ModelOscillation.hpp
- * Author: user
- *
- * Created on 29. April 2009, 23:09
- */
-
 #ifndef _MODEL_N_BODY_H
 #define	_MODEL_N_BODY_H
 

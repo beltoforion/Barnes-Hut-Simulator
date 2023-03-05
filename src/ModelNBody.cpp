@@ -1,10 +1,3 @@
-/*
- * File:   ModelMagneticPendulum.cpp
- * Author: user
- *
- * Created on 29. April 2009, 23:08
- */
-
 #include "ModelNBody.h"
 
 //--- Standard includes --------------------------------------------------

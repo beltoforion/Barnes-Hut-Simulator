@@ -1,10 +1,3 @@
-/*
- * File:   IModel.hpp
- * Author: user
- *
- * Created on 29. April 2009, 23:05
- */
-
 #ifndef _IMODEL_HPP
 #define	_IMODEL_HPP
 

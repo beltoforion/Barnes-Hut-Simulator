@@ -1,10 +1,3 @@
-/* 
- * File:   integratoreulerimproved.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:24
- */
-
 #ifndef _INTEGRATOREULERIMPROVED_H
 #define	_INTEGRATOREULERIMPROVED_H
 

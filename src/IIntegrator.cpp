@@ -1,10 +1,3 @@
-/* 
- * File:   iintegrator.cpp
- * Author: user
- * 
- * Created on 30. April 2009, 00:30
- */
-
 #include "IIntegrator.h"
 
 #include <stdexcept>
