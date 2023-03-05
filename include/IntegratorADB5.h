@@ -11,7 +11,6 @@
 #include "IIntegrator.h"
 #include "IntegratorRK4.h"
 
-//------------------------------------------------------------------------------
 /** \brief Inplementation of the simple Euler integration scheme. */
 class IntegratorADB5 : public IIntegrator
 {
@@ -29,7 +28,6 @@ private:
   double *m_f[6];
   double m_c[6];
   IntegratorRK4 m_rk4;
-  int m_steps;
 };
 
 #endif	/* _INTEGRATORHEUN_H */

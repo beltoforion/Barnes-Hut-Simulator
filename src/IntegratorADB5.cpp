@@ -5,7 +5,7 @@
  * Created on 3. Mai 2009, 23:40
  */
 
-#include "IntegratorADB6.h"
+#include "IntegratorADB5.h"
 
 //--- Standard includes --------------------------------------------------------
 #include <cassert>
@@ -16,21 +16,20 @@
 
 
 //------------------------------------------------------------------------------
-IntegratorADB6::IntegratorADB6(IModel *pModel, double h)
+IntegratorADB5::IntegratorADB5(IModel *pModel, double h)
   :IIntegrator(pModel, h)
   ,m_state()
   ,m_f()
-  ,m_steps(0)
+  ,m_rk4(pModel, h)
 {
   if (pModel == NULL)
     throw std::runtime_error("Model pointer may not be NULL.");
 
-  m_c[0] =  4277.0 / 1440.0;
-  m_c[1] = -7923.0 / 1440.0;
-  m_c[2] =  9982.0 / 1440.0;
-  m_c[3] = -7298.0 / 1440.0;
-  m_c[4] =  2877.0 / 1440.0;
-  m_c[5] =  -475.0 / 1440.0;
+  m_c[0] = 1901.0 / 720.0;
+  m_c[1] = 1387.0 / 360.0;
+  m_c[2] = 109.0 / 30.0;
+  m_c[3] = 637.0 / 360.0;
+  m_c[4] = 251.0 / 720.0;
 
   m_state = new double[m_dim];
   for (unsigned i = 0; i < 6; ++i)
@@ -40,12 +39,12 @@ IntegratorADB6::IntegratorADB6(IModel *pModel, double h)
   }
 
   std::stringstream ss;
-  ss << "ADB6 (dt=" << m_h << ")";
+  ss << "ADB5 (dt=" << m_h << ")";
   SetID(ss.str());
 }
 
 //------------------------------------------------------------------------------
-IntegratorADB6::~IntegratorADB6()
+IntegratorADB5::~IntegratorADB5()
 {
   delete [] m_state;
 
@@ -54,45 +53,32 @@ IntegratorADB6::~IntegratorADB6()
 }
 
 //------------------------------------------------------------------------------
-void IntegratorADB6::Reverse()
-{
-  m_h *= -1;
-  SetInitialState(GetState());
-}
-
-//------------------------------------------------------------------------------
 /** \brief Performs a single integration step. */
-void IntegratorADB6::SingleStep()
+void IntegratorADB5::SingleStep()
 {
   for (std::size_t i = 0; i < m_dim; ++i)
   {
-    m_state[i] += m_h * (m_c[0] * m_f[5][i] +
-                         m_c[1] * m_f[4][i] +
-                         m_c[2] * m_f[3][i] +
-                         m_c[3] * m_f[2][i] +
-                         m_c[4] * m_f[1][i] +
-                         m_c[5] * m_f[0][i]);
+    m_state[i] += m_h  * (m_c[0] * m_f[4][i] -
+                          m_c[1] * m_f[3][i] +
+                          m_c[2] * m_f[2][i] -
+                          m_c[3] * m_f[1][i] +
+                          m_c[4] * m_f[0][i]);
 
     m_f[0][i] = m_f[1][i];
     m_f[1][i] = m_f[2][i];
     m_f[2][i] = m_f[3][i];
     m_f[3][i] = m_f[4][i];
-    m_f[4][i] = m_f[5][i];
   }
 
   m_time += m_h;
-  m_pModel->Eval(m_state, m_time, m_f[5]);
+  m_pModel->Eval(m_state, m_time, m_f[4]);
 
 }
 
 //------------------------------------------------------------------------------
 /** \brief Sets the initial state of the simulation. */
-void IntegratorADB6::SetInitialState(double *state)
+void IntegratorADB5::SetInitialState(double *state)
 {
-//  m_rk4.SetInitialState(state);
-//  m_steps = 0;
-//  m_time = 0;
-
   for (unsigned i = 0; i < m_dim; ++i)
     m_state[i] = state[i];
 
@@ -103,7 +89,7 @@ void IntegratorADB6::SetInitialState(double *state)
          k4[m_dim],
          tmp[m_dim];
 
-  for (std::size_t n=0; n<5; ++n)
+  for (std::size_t n=0; n<4; ++n)
   {
     // k1
     m_pModel->Eval(m_state, m_time, k1);
@@ -131,11 +117,11 @@ void IntegratorADB6::SetInitialState(double *state)
 
     m_time += m_h;
   }
-  m_pModel->Eval(m_state, m_time, m_f[5]);
+  m_pModel->Eval(m_state, m_time, m_f[4]);
 }
 
 //------------------------------------------------------------------------------
-double* IntegratorADB6::GetState() const
+double* IntegratorADB5::GetState() const
 {
   return m_state;
 }

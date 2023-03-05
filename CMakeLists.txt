@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
-project(barnes-hut-simulator CXX)
+project(barnes-hut-simulator)
+set(CMAKE_CXX_STANDARD 17)
 
 # Need to install the following libraries in the case of Ubuntu:
 #  - libsdl1.2-dev
@@ -31,45 +32,40 @@ find_package(OpenGL REQUIRED)
 #   - libgomp1
 find_package(OpenMP REQUIRED)
 
-add_executable(barnes-hut-simulator
-    main.cpp
-    BHTree.cpp
-    IIntegrator.cpp
-    IModel.cpp
-    IntegratorADB2.cpp
-    IntegratorADB3.cpp
-    IntegratorADB4.cpp
-    IntegratorADB5.cpp
-    IntegratorADB6.cpp
-    IntegratorEuler.cpp
-    IntegratorEulerImproved.cpp
-    IntegratorHeun.cpp
-    IntegratorRK3.cpp
-    IntegratorRK4.cpp
-    IntegratorRK5.cpp
-    IntegratorRKF4.cpp
-    ModelNBody.cpp
-    NBodyWnd.cpp
-    SDLWnd.cpp
-    Types.cpp
-    Vector.cpp
-  )
+# Add the include directory
+include_directories(include)
 
-target_compile_features(barnes-hut-simulator
-  PUBLIC
-    cxx_std_11
-  )
+# Set the source files
+set(SOURCES
+    src/main.cpp
+    src/BHTree.cpp
+    src/IIntegrator.cpp
+    src/IModel.cpp
+    src/IntegratorADB2.cpp
+    src/IntegratorADB3.cpp
+    src/IntegratorADB4.cpp
+    src/IntegratorADB5.cpp
+    src/IntegratorADB6.cpp
+    src/IntegratorEuler.cpp
+    src/IntegratorEulerImproved.cpp
+    src/IntegratorHeun.cpp
+    src/IntegratorRK3.cpp
+    src/IntegratorRK4.cpp
+    src/IntegratorRK5.cpp
+    src/IntegratorRKF4.cpp
+    src/ModelNBody.cpp
+    src/NBodyWnd.cpp
+    src/SDLWnd.cpp
+    src/Types.cpp
+    src/Vector.cpp)
 
-target_compile_options(barnes-hut-simulator
-  PUBLIC
-    -Wall
-    -Werror
-  )
+add_executable(${PROJECT_NAME} ${SOURCES})
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-target_include_directories(barnes-hut-simulator
-  PUBLIC
-    ${PROJECT_SOURCE_DIR}
-  )
+#target_include_directories(barnes-hut-simulator
+#  PUBLIC
+#    ${PROJECT_SOURCE_DIR}
+#  )
 
 target_link_libraries(barnes-hut-simulator
   PUBLIC

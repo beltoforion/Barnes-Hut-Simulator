@@ -146,7 +146,7 @@ SDLWindow::SDLWindow(int width, int height, double axisLen, const std::string &c
   ,m_camLookAt(0, 0, 0)
   ,m_camOrient(0, 1, 0)
   ,m_pScreen(NULL)
-  ,m_fontBase(0)
+//  ,m_fontBase(0)
   ,m_bRunning(true)
 {
   if (SDL_Init(SDL_INIT_VIDEO) == -1)

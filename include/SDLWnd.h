@@ -86,7 +86,7 @@ private:
   Vec3D m_camOrient; ///< orientation of the camera (rotation as it aims at its target)
 
   SDL_Surface *m_pScreen;
-  GLuint m_fontBase;
+//  GLuint m_fontBase;
 
   volatile bool m_bRunning;
 };
