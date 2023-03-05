@@ -3,3 +3,5 @@ CMakeFiles/*
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+bin/barnes-hut-simulator
+*.tga
