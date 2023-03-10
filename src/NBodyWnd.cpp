@@ -355,8 +355,10 @@ void NBodyWnd::OnProcessEvents(uint8_t type)
 {
   switch (type)
   {
+/* commented: does not work
   case SDL_MOUSEBUTTONDOWN:
   {
+    // Place a tracer particle at the mouse coordinates
     if (!m_pSolver)
       break;
 
@@ -368,13 +370,13 @@ void NBodyWnd::OnProcessEvents(uint8_t type)
     SetCamera(p, p, Vec3D(0, 1, 0));
 
     // the solver may need to rest its temporary arrays. I can't just
-    // overwirte part of its data ADB schemes will go mad
+    // overwrite part of its data because ADB schemes will go mad
     // if i change a particles position. without restarting the engine
     m_pSolver->SetInitialState(reinterpret_cast<double *>(state));
     m_pSolver->SingleStep();
   }
   break;
-
+*/    
   case SDL_KEYDOWN:
     switch (m_event.key.keysym.sym)
     {
