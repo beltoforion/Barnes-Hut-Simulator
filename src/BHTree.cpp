@@ -14,440 +14,446 @@
 double BHTreeNode::s_theta = 0.9;
 std::vector<ParticleData> BHTreeNode::s_renegades;
 BHTreeNode::DebugStat BHTreeNode::s_stat = {0};
-double BHTreeNode::s_gamma = 0;       // gravitational constant is set from the outside
-double BHTreeNode::s_soft = 0.1*0.1;        // approx. 3 light year
+double BHTreeNode::s_gamma = 0;        // gravitational constant is set from the outside
+double BHTreeNode::s_soft = 0.1 * 0.1; // approx. 3 light year
 
-//------------------------------------------------------------------------------
+
 BHTreeNode::BHTreeNode(const Vec2D &min,
                        const Vec2D &max,
                        BHTreeNode *parent)
-  :m_particle()
-  ,m_mass(0)
-  ,m_cm()
-  ,m_min(min)
-  ,m_max(max)
-  ,m_center(min.x+(max.x-min.x)/2.0, min.y+(max.y-min.y)/2.0)
-  ,m_parent(parent)
-  ,m_num(0)
-  ,m_bSubdivided(false)
+    :_particle()
+    ,_mass(0)
+    ,_cm()
+    ,_min(min)
+    ,_max(max)
+    ,_center(min.x + (max.x - min.x) / 2.0, min.y + (max.y - min.y) / 2.0)
+    ,_parent(parent)
+    ,_num(0)
+    ,_bSubdivided(false)
 {
-  m_quadNode[0] = m_quadNode[1] = m_quadNode[2] = m_quadNode[3] = NULL;
+    _quadNode[0] = _quadNode[1] = _quadNode[2] = _quadNode[3] = nullptr;
 }
 
-//------------------------------------------------------------------------------
+
 bool BHTreeNode::IsRoot() const
 {
-  return m_parent==nullptr;
+    return _parent == nullptr;
 }
 
-//------------------------------------------------------------------------------
+
 bool BHTreeNode::IsExternal() const
 {
-  return  m_quadNode[0]==nullptr &&
-          m_quadNode[1]==nullptr &&
-          m_quadNode[2]==nullptr &&
-          m_quadNode[3]==nullptr;
+    return _quadNode[0] == nullptr &&
+           _quadNode[1] == nullptr &&
+           _quadNode[2] == nullptr &&
+           _quadNode[3] == nullptr;
 }
 
-//------------------------------------------------------------------------------
+
 bool BHTreeNode::WasTooClose() const
 {
-  return m_bSubdivided;
+    return _bSubdivided;
 }
 
-//------------------------------------------------------------------------------
-const Vec2D& BHTreeNode::GetMin() const
+
+const Vec2D &BHTreeNode::GetMin() const
 {
-  return m_min;
+    return _min;
 }
 
-//------------------------------------------------------------------------------
-const Vec2D& BHTreeNode::GetMax() const
+
+const Vec2D &BHTreeNode::GetMax() const
 {
-  return m_max;
+    return _max;
 }
 
-//------------------------------------------------------------------------------
-const Vec2D& BHTreeNode::GetCenterOfMass() const
+
+const Vec2D &BHTreeNode::GetCenterOfMass() const
 {
-  return m_cm;
+    return _cm;
 }
 
-//------------------------------------------------------------------------------
+
 double BHTreeNode::GetTheta() const
 {
-  return s_theta;
+    return s_theta;
 }
 
-//------------------------------------------------------------------------------
+
 void BHTreeNode::SetTheta(double theta)
 {
-  s_theta = theta;
+    s_theta = theta;
 }
 
-//------------------------------------------------------------------------------
+
 int BHTreeNode::StatGetNumCalc() const
 {
-  return s_stat.m_nNumCalc;
+    return s_stat._nNumCalc;
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Returns the number of particles not assigned to any node. */
 int BHTreeNode::GetNumRenegades() const
 {
-  return s_renegades.size();
+    return s_renegades.size();
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Returns the number of particles inside this node. */
 int BHTreeNode::GetNum() const
 {
-  return m_num;
+    return _num;
 }
 
-//------------------------------------------------------------------------------
+
 void BHTreeNode::StatReset()
 {
-  if (!IsRoot())
-    throw std::runtime_error("Only the root node may reset statistics data.");
+    if (!IsRoot())
+        throw std::runtime_error("Only the root node may reset statistics data.");
 
-  s_stat.m_nNumCalc = 0;
+    s_stat._nNumCalc = 0;
 
-  struct ResetSubdivideFlags
-  {
-    ResetSubdivideFlags(BHTreeNode *pRoot)
+    struct ResetSubdivideFlags
     {
-      ResetFlag(pRoot);
-    }
+        ResetSubdivideFlags(BHTreeNode *pRoot)
+        {
+            ResetFlag(pRoot);
+        }
 
-    void ResetFlag(BHTreeNode *pNode)
-    {
-      pNode->m_bSubdivided = false;
-      for (int i=0; i<4;++i)
-      {
-        if (pNode->m_quadNode[i])
-          ResetFlag(pNode->m_quadNode[i]);
-      }
-    }
-  } ResetFlagNow(this);
+        void ResetFlag(BHTreeNode *pNode)
+        {
+            pNode->_bSubdivided = false;
+            for (int i = 0; i < 4; ++i)
+            {
+                if (pNode->_quadNode[i])
+                    ResetFlag(pNode->_quadNode[i]);
+            }
+        }
+    } ResetFlagNow(this);
 }
 
-//------------------------------------------------------------------------------
-void BHTreeNode::Reset(const Vec2D &min,
-                       const Vec2D &max)
+
+void BHTreeNode::Reset(const Vec2D &min, const Vec2D &max)
 {
-  if (!IsRoot())
-    throw std::runtime_error("Only the root node may reset the tree.");
+    if (!IsRoot())
+        throw std::runtime_error("Only the root node may reset the tree.");
 
-  for (int i=0; i<4; ++i)
-  {
-    delete m_quadNode[i];
-    m_quadNode[i] = NULL;
-  }
+    for (int i = 0; i < 4; ++i)
+    {
+        delete _quadNode[i];
+        _quadNode[i] = nullptr;
+    }
 
-  m_min = min;
-  m_max = max;
-  m_center = Vec2D(min.x + (max.x-min.x)/2.0,
-                   min.y + (max.y-min.y)/2.0);
-  m_num = 0;
-  m_mass = 0;
-  m_cm = Vec2D(0, 0);
+    _min = min;
+    _max = max;
+    _center = Vec2D(min.x + (max.x - min.x) / 2.0,
+                    min.y + (max.y - min.y) / 2.0);
+    _num = 0;
+    _mass = 0;
+    _cm = Vec2D(0, 0);
 
-  s_renegades.clear();
+    s_renegades.clear();
 }
 
-//------------------------------------------------------------------------------
+
 BHTreeNode::EQuadrant BHTreeNode::GetQuadrant(double x, double y) const
 {
-  if (x<=m_center.x && y<=m_center.y)
-  {
-    return SW;
-  }
-  else if (x<=m_center.x && y>=m_center.y)
-  {
-    return NW;
-  }
-  else if (x>=m_center.x && y>=m_center.y)
-  {
-    return NE;
-  }
-  else if (x>=m_center.x && y<=m_center.y)
-  {
-    return SE;
-  }
-  else if (x>m_max.x || y>m_max.y || x<m_min.x || y<m_min.y)
-  {
-    std::stringstream ss;
-    ss << "Can't determine quadrant!\n"
-       << "particle  : " << "(" << x          << ", " << y          << ")\n"
-       << "quadMin   : " << "(" << m_min.x    << ", " << m_min.y    << ")\n"
-       << "quadMax   : " << "(" << m_max.x    << ", " << m_max.y    << ")\n"
-       << "quadCenter: " << "(" << m_center.x << ", " << m_center.y << ")\n";
-    throw std::runtime_error(ss.str().c_str());
-  }
-  else
-  {
-    throw std::runtime_error("Can't determine quadrant!");
-  }
+    if (x <= _center.x && y <= _center.y)
+    {
+        return SW;
+    }
+    else if (x <= _center.x && y >= _center.y)
+    {
+        return NW;
+    }
+    else if (x >= _center.x && y >= _center.y)
+    {
+        return NE;
+    }
+    else if (x >= _center.x && y <= _center.y)
+    {
+        return SE;
+    }
+    else if (x > _max.x || y > _max.y || x < _min.x || y < _min.y)
+    {
+        std::stringstream ss;
+        ss << "Can't determine quadrant!\n"
+           << "particle  : "
+           << "(" << x << ", " << y << ")\n"
+           << "quadMin   : "
+           << "(" << _min.x << ", " << _min.y << ")\n"
+           << "quadMax   : "
+           << "(" << _max.x << ", " << _max.y << ")\n"
+           << "quadCenter: "
+           << "(" << _center.x << ", " << _center.y << ")\n";
+        throw std::runtime_error(ss.str().c_str());
+    }
+    else
+    {
+        throw std::runtime_error("Can't determine quadrant!");
+    }
 }
 
-//------------------------------------------------------------------------------
-BHTreeNode* BHTreeNode::CreateQuadNode(EQuadrant eQuad)
+
+BHTreeNode *BHTreeNode::CreateQuadNode(EQuadrant eQuad)
 {
-  switch (eQuad)
-  {
-  case SW: return new BHTreeNode(m_min, m_center, this);
-  case NW: return new BHTreeNode(Vec2D(m_min.x, m_center.y),
-                                 Vec2D(m_center.x, m_max.y),
-                                 this);
-  case NE: return new BHTreeNode(m_center, m_max, this);
-  case SE: return new BHTreeNode(Vec2D(m_center.x, m_min.y),
-                                 Vec2D(m_max.x, m_center.y),
-                                 this);
-  default:
-        {
-          std::stringstream ss;
-          ss << "Can't determine quadrant!\n";
-/*
-           << "particle  : " << "(" << x          << ", " << y          << ")\n"
-             << "quadMin   : " << "(" << m_min.x    << ", " << m_min.y    << ")\n"
-             << "quadMax   : " << "(" << m_max.x    << ", " << m_max.y    << ")\n"
-             << "quadCenter: " << "(" << m_center.x << ", " << m_center.y << ")\n";
-*/
-          throw std::runtime_error(ss.str().c_str());
-        }
-  }
+    switch (eQuad)
+    {
+    case SW:
+        return new BHTreeNode(_min, _center, this);
+    case NW:
+        return new BHTreeNode(Vec2D(_min.x, _center.y),
+                              Vec2D(_center.x, _max.y),
+                              this);
+    case NE:
+        return new BHTreeNode(_center, _max, this);
+    case SE:
+        return new BHTreeNode(Vec2D(_center.x, _min.y),
+                              Vec2D(_max.x, _center.y),
+                              this);
+    default:
+    {
+        std::stringstream ss;
+        ss << "Can't determine quadrant!\n";
+        /*
+                   << "particle  : " << "(" << x          << ", " << y          << ")\n"
+                     << "quadMin   : " << "(" << _min.x    << ", " << _min.y    << ")\n"
+                     << "quadMax   : " << "(" << _max.x    << ", " << _max.y    << ")\n"
+                     << "quadCenter: " << "(" << _center.x << ", " << _center.y << ")\n";
+        */
+        throw std::runtime_error(ss.str().c_str());
+    }
+    }
 }
 
-//------------------------------------------------------------------------------
+
 void BHTreeNode::ComputeMassDistribution()
 {
 
-  if (m_num==1)
-  {
-    PODState *ps = m_particle.m_pState;
-    PODAuxState *pa = m_particle.m_pAuxState;
-    assert(ps);
-    assert(pa);
-
-    m_mass = pa->mass;
-    m_cm = Vec2D(ps->x, ps->y);
-  }
-  else
-  {
-    m_mass = 0;
-    m_cm = Vec2D(0, 0);
-
-    for (int i=0; i<4; ++i)
+    if (_num == 1)
     {
-      if (m_quadNode[i])
-      {
-        m_quadNode[i]->ComputeMassDistribution();
-        m_mass += m_quadNode[i]->m_mass;
-        m_cm.x += m_quadNode[i]->m_cm.x * m_quadNode[i]->m_mass;
-        m_cm.y += m_quadNode[i]->m_cm.y * m_quadNode[i]->m_mass;
-      }
-    }
+        PODState *ps = _particle._pState;
+        PODAuxState *pa = _particle._pAuxState;
+        assert(ps);
+        assert(pa);
 
-    m_cm.x /= m_mass;
-    m_cm.y /= m_mass;
-  }
+        _mass = pa->mass;
+        _cm = Vec2D(ps->x, ps->y);
+    }
+    else
+    {
+        _mass = 0;
+        _cm = Vec2D(0, 0);
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_quadNode[i])
+            {
+                _quadNode[i]->ComputeMassDistribution();
+                _mass += _quadNode[i]->_mass;
+                _cm.x += _quadNode[i]->_cm.x * _quadNode[i]->_mass;
+                _cm.y += _quadNode[i]->_cm.y * _quadNode[i]->_mass;
+            }
+        }
+
+        _cm.x /= _mass;
+        _cm.y /= _mass;
+    }
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Calculate the accelleration caused by gravitaion of p2 on p1. */
 Vec2D BHTreeNode::CalcAcc(const ParticleData &p1, const ParticleData &p2) const
 {
-  Vec2D acc;
+    Vec2D acc;
 
-  if (&p1==&p2)
+    if (&p1 == &p2)
+        return acc;
+
+    // assign references to the variables in a readable form
+    const double &x1(p1._pState->x),
+        &y1(p1._pState->y);
+    const double &x2(p2._pState->x),
+        &y2(p2._pState->y),
+        &m2(p2._pAuxState->mass);
+
+    double r = sqrt((x1 - x2) * (x1 - x2) +
+                    (y1 - y2) * (y1 - y2) + s_soft);
+    if (r > 0)
+    {
+        double k = s_gamma * m2 / (r * r * r);
+
+        acc.x += k * (x2 - x1);
+        acc.y += k * (y2 - y1);
+    } // if distance is greater zero
+    else
+    {
+        // two particles on the same spot is physical nonsense!
+        // nevertheless it may happen. I just need to make sure
+        // there is no singularity...
+        acc.x = acc.y = 0;
+    }
+
     return acc;
-
-  // assign references to the variables in a readable form
-  const double &x1(p1.m_pState->x),
-               &y1(p1.m_pState->y);
-  const double &x2(p2.m_pState->x),
-               &y2(p2.m_pState->y),
-               &m2(p2.m_pAuxState->mass);
-
-
-  double r = sqrt( (x1 - x2) * (x1 - x2) +
-                   (y1 - y2) * (y1 - y2) + s_soft);
-  if (r>0)
-  {
-    double k = s_gamma * m2 / (r*r*r);
-
-    acc.x += k * (x2 - x1);
-    acc.y += k * (y2 - y1);
-  } // if distance is greater zero
-  else
-  {
-    // two particles on the same spot is physical nonsense!
-    // nevertheless it may happen. I just need to make sure
-    // there is no singularity...
-    acc.x = acc.y = 0;
-  }
-
-  return acc;
 }
 
-//------------------------------------------------------------------------------
+
 Vec2D BHTreeNode::CalcForce(const ParticleData &p1) const
 {
-  // calculate the force from the barnes hut tree to the particle p1
-  Vec2D acc = CalcTreeForce(p1);
+    // calculate the force from the barnes hut tree to the particle p1
+    Vec2D acc = CalcTreeForce(p1);
 
-  // calculate the force from particles not in the barnes hut tree on particle p
-  if (s_renegades.size())
-  {
-    for (std::size_t i=0; i<s_renegades.size(); ++i)
+    // calculate the force from particles not in the barnes hut tree on particle p
+    if (s_renegades.size())
     {
-      Vec2D buf = CalcAcc(p1, s_renegades[i]);
-      acc.x += buf.x;
-      acc.y += buf.y;
+        for (std::size_t i = 0; i < s_renegades.size(); ++i)
+        {
+            Vec2D buf = CalcAcc(p1, s_renegades[i]);
+            acc.x += buf.x;
+            acc.y += buf.y;
+        }
     }
-  }
 
-  return acc;
+    return acc;
 }
 
-//------------------------------------------------------------------------------
+
 /**  \brief Compute the force acting from this node and it's child
             to a particle p.
 */
 Vec2D BHTreeNode::CalcTreeForce(const ParticleData &p1) const
 {
-  Vec2D acc;
+    Vec2D acc;
 
-  double r(0), k(0), d(0);
-  if (m_num==1)
-  {
-    acc = CalcAcc(p1, m_particle);
-    s_stat.m_nNumCalc++;
-  }
-  else
-  {
-    r = sqrt( (p1.m_pState->x - m_cm.x) * (p1.m_pState->x - m_cm.x) +
-              (p1.m_pState->y - m_cm.y) * (p1.m_pState->y - m_cm.y) );
-    d = m_max.x - m_min.x;
-    if (d/r <= s_theta)
+    double r(0), k(0), d(0);
+    if (_num == 1)
     {
-      m_bSubdivided = false;
-      k = s_gamma * m_mass / (r*r*r);
-      acc.x = k * (m_cm.x - p1.m_pState->x);
-      acc.y = k * (m_cm.y - p1.m_pState->y);
-
-      // keep track of the number of calculations
-      s_stat.m_nNumCalc++;
+        acc = CalcAcc(p1, _particle);
+        s_stat._nNumCalc++;
     }
     else
     {
-
-      m_bSubdivided = true;
-      Vec2D buf;
-      for (int q=0; q<4; ++q)
-      {
-        if (m_quadNode[q])
+        r = sqrt((p1._pState->x - _cm.x) * (p1._pState->x - _cm.x) +
+                 (p1._pState->y - _cm.y) * (p1._pState->y - _cm.y));
+        d = _max.x - _min.x;
+        if (d / r <= s_theta)
         {
-//          const PODState &state = *(p1.m_pState);
-          buf = m_quadNode[q]->CalcTreeForce(p1);
-          acc.x += buf.x;
-          acc.y += buf.y;
-        } // if node exists
-      } // for all child nodes
-    }
-  }
+            _bSubdivided = false;
+            k = s_gamma * _mass / (r * r * r);
+            acc.x = k * (_cm.x - p1._pState->x);
+            acc.y = k * (_cm.y - p1._pState->y);
 
-  return acc;
+            // keep track of the number of calculations
+            s_stat._nNumCalc++;
+        }
+        else
+        {
+
+            _bSubdivided = true;
+            Vec2D buf;
+            for (int q = 0; q < 4; ++q)
+            {
+                if (_quadNode[q])
+                {
+                    //          const PODState &state = *(p1._pState);
+                    buf = _quadNode[q]->CalcTreeForce(p1);
+                    acc.x += buf.x;
+                    acc.y += buf.y;
+                } // if node exists
+            }     // for all child nodes
+        }
+    }
+
+    return acc;
 }
 
-//------------------------------------------------------------------------------
+
 void BHTreeNode::DumpNode(int quad, int level)
 {
-  std::string space;
-  for (int i=0; i<level; ++i)
-      space+= "  ";
+    std::string space;
+    for (int i = 0; i < level; ++i)
+        space += "  ";
 
-  std::cout << space << "Quadrant " << quad << ": ";
-  std::cout << space << "(num=" << m_num << "; ";
-  std::cout << space << "mass=" << m_mass << ";";
-  std::cout << space << "cx=" << m_cm.x << ";";
-  std::cout << space << "cy=" << m_cm.y << ")\n";
+    std::cout << space << "Quadrant " << quad << ": ";
+    std::cout << space << "(num=" << _num << "; ";
+    std::cout << space << "mass=" << _mass << ";";
+    std::cout << space << "cx=" << _cm.x << ";";
+    std::cout << space << "cy=" << _cm.y << ")\n";
 
-  for (int i=0; i<4;++i)
-  {
-    if (m_quadNode[i])
+    for (int i = 0; i < 4; ++i)
     {
-      m_quadNode[i]->DumpNode(i, level+1);
+        if (_quadNode[i])
+        {
+            _quadNode[i]->DumpNode(i, level + 1);
+        }
     }
-  }
 }
 
-//------------------------------------------------------------------------------
+
 void BHTreeNode::Insert(const ParticleData &newParticle, int level)
 {
-  const PODState &p1 = *(newParticle.m_pState);
-  if ( (p1.x < m_min.x || p1.x > m_max.x) || (p1.y < m_min.y || p1.y > m_max.y) )
-  {
-    std::stringstream ss;
-    ss << "Particle position (" << p1.x << ", " << p1.y << ") "
-       << "is outside tree node ("
-       << "min.x=" << m_min.x << ", "
-       << "max.x=" << m_max.x << ", "
-       << "min.y=" << m_min.y << ", "
-       << "max.y=" << m_max.y << ")";
-    throw std::runtime_error(ss.str());
-  }
-
-  if (m_num>1)
-  {
-    EQuadrant eQuad = GetQuadrant(p1.x, p1.y);
-    if (!m_quadNode[eQuad])
-      m_quadNode[eQuad] = CreateQuadNode(eQuad);
-
-    m_quadNode[eQuad]->Insert(newParticle, level+1);
-  }
-  else if (m_num==1)
-  {
-    assert(IsExternal() || IsRoot());
-
-    const PODState &p2 = *(m_particle.m_pState);
-
-    // This is physically impossible: There are
-    // two bodies at the exact same coordinates. In these
-    // cases do not add the second body and place
-    // it in the renegade vector.
-    if ( (p1.x == p2.x) && (p1.y == p2.y) )
+    const PODState &p1 = *(newParticle._pState);
+    if ((p1.x < _min.x || p1.x > _max.x) || (p1.y < _min.y || p1.y > _max.y))
     {
-      s_renegades.push_back(newParticle);
+        std::stringstream ss;
+        ss << "Particle position (" << p1.x << ", " << p1.y << ") "
+           << "is outside tree node ("
+           << "min.x=" << _min.x << ", "
+           << "max.x=" << _max.x << ", "
+           << "min.y=" << _min.y << ", "
+           << "max.y=" << _max.y << ")";
+        throw std::runtime_error(ss.str());
     }
-    else
+
+    if (_num > 1)
     {
-      // There is already a particle
-      // subdivide the node and relocate that particle
-      EQuadrant eQuad = GetQuadrant(p2.x, p2.y);
-      if (m_quadNode[eQuad]==nullptr)
-        m_quadNode[eQuad] = CreateQuadNode(eQuad);
-      m_quadNode[eQuad]->Insert(m_particle, level+1);
-      m_particle.Reset();
+        EQuadrant eQuad = GetQuadrant(p1.x, p1.y);
+        if (!_quadNode[eQuad])
+            _quadNode[eQuad] = CreateQuadNode(eQuad);
 
-      eQuad = GetQuadrant(p1.x, p1.y);
-      if (!m_quadNode[eQuad])
-        m_quadNode[eQuad] = CreateQuadNode(eQuad);
-      m_quadNode[eQuad]->Insert(newParticle, level+1);
+        _quadNode[eQuad]->Insert(newParticle, level + 1);
     }
-  }
-  else if (m_num==0)
-  {
-    m_particle = newParticle;
-  }
+    else if (_num == 1)
+    {
+        assert(IsExternal() || IsRoot());
 
-  m_num++;
+        const PODState &p2 = *(_particle._pState);
+
+        // This is physically impossible: There are
+        // two bodies at the exact same coordinates. In these
+        // cases do not add the second body and place
+        // it in the renegade vector.
+        if ((p1.x == p2.x) && (p1.y == p2.y))
+        {
+            s_renegades.push_back(newParticle);
+        }
+        else
+        {
+            // There is already a particle
+            // subdivide the node and relocate that particle
+            EQuadrant eQuad = GetQuadrant(p2.x, p2.y);
+            if (_quadNode[eQuad] == nullptr)
+                _quadNode[eQuad] = CreateQuadNode(eQuad);
+            _quadNode[eQuad]->Insert(_particle, level + 1);
+            _particle.Reset();
+
+            eQuad = GetQuadrant(p1.x, p1.y);
+            if (!_quadNode[eQuad])
+                _quadNode[eQuad] = CreateQuadNode(eQuad);
+            _quadNode[eQuad]->Insert(newParticle, level + 1);
+        }
+    }
+    else if (_num == 0)
+    {
+        _particle = newParticle;
+    }
+
+    _num++;
 }
 
-//------------------------------------------------------------------------------
+
 BHTreeNode::~BHTreeNode()
 {
-  for (int i=0; i<4; ++i)
-    delete m_quadNode[i];
+    for (int i = 0; i < 4; ++i)
+        delete _quadNode[i];
 }

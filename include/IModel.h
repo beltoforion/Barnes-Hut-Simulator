@@ -3,7 +3,7 @@
 
 #include <string>
 
-//----------------------------------------------------------------------------
+
 /** \brief Interface for the models to be simulated. */
 class IModel
 {
@@ -22,8 +22,8 @@ public:
     virtual double* GetInitialState() = 0;
 
 private:
-    unsigned m_dim;
-    std::string m_sName;
+    unsigned _dim;
+    std::string _sName;
 };
 
 #endif	/* _IMODEL_HPP */

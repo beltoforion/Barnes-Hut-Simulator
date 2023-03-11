@@ -5,48 +5,44 @@
 #include <cstdlib>
 
 
-//----------------------------------------------------------------------------------------
 ParticleData::ParticleData()
-  :m_pState(nullptr)
-  ,m_pAuxState(nullptr)
+    : _pState(nullptr), _pAuxState(nullptr)
 {}
 
-//----------------------------------------------------------------------------------------
+
 ParticleData::ParticleData(PODState *pState, PODAuxState *pAuxState)
-  :m_pState(pState)
-  ,m_pAuxState(pAuxState)
+    : _pState(pState), _pAuxState(pAuxState)
 {
-  assert(m_pState);
-  assert(m_pAuxState);
+    assert(_pState);
+    assert(_pAuxState);
 }
 
-//----------------------------------------------------------------------------------------
+
 ParticleData::ParticleData(const ParticleData &ref)
-  :m_pState(ref.m_pState)
-  ,m_pAuxState(ref.m_pAuxState)
+    : _pState(ref._pState), _pAuxState(ref._pAuxState)
 {}
 
-//----------------------------------------------------------------------------------------
-ParticleData& ParticleData::operator=(const ParticleData &ref)
-{
-  if (this!=&ref)
-  {
-    m_pState    = ref.m_pState;
-    m_pAuxState = ref.m_pAuxState;
-  }
 
-  return *this;
+ParticleData &ParticleData::operator=(const ParticleData &ref)
+{
+    if (this != &ref)
+    {
+        _pState = ref._pState;
+        _pAuxState = ref._pAuxState;
+    }
+
+    return *this;
 }
 
-//----------------------------------------------------------------------------------------
+
 void ParticleData::Reset()
 {
-  m_pState    = nullptr;
-  m_pAuxState = nullptr;
+    _pState = nullptr;
+    _pAuxState = nullptr;
 }
 
-//----------------------------------------------------------------------------------------
+
 bool ParticleData::IsNull() const
 {
-  return m_pState && m_pAuxState;
+    return _pState && _pAuxState;
 }

@@ -1,22 +1,19 @@
 #ifndef _NBODYWND_H
-#define	_NBODYWND_H
+#define _NBODYWND_H
 
 #include <stdint.h>
 #include <fstream>
 
-//--- Framework ----------------------------------------------------------------
 #include "SDLWnd.h"
 #include "BHTree.h"
 #include "ModelNBody.h"
 #include "IIntegrator.h"
 
 
-
 /** \brief Main window of th n-body simulation. */
 class NBodyWnd : public SDLWindow
 {
 public:
-
     NBodyWnd(int sz, std::string caption);
     virtual ~NBodyWnd();
 
@@ -28,23 +25,23 @@ public:
 
 private:
 
-    enum EDisp
+    enum DisplayState
     {
-      dspNONE           = 0,
-      dspAXIS           = 1 << 0,
-      dspBODIES         = 1 << 1,
-      dspSTAT           = 1 << 2,
-      dspTREE           = 1 << 3,
-      dspTREE_COMPLETE  = 1 << 4,
-      dspCENTER_OF_MASS = 1 << 5,
-      dspPAUSE          = 1 << 6,
-      dspVERBOSE        = 1 << 7,
-      dspHELP           = 1 << 8,
-      dspARROWS         = 1 << 9,
-      dspROI            = 1 << 10
+        dspNONE = 0,
+        dspAXIS = 1 << 0,
+        dspBODIES = 1 << 1,
+        dspSTAT = 1 << 2,
+        dspTREE = 1 << 3,
+        dspTREE_COMPLETE = 1 << 4,
+        dspCENTER_OF_MASS = 1 << 5,
+        dspPAUSE = 1 << 6,
+        dspVERBOSE = 1 << 7,
+        dspHELP = 1 << 8,
+        dspARROWS = 1 << 9,
+        dspROI = 1 << 10
     };
 
-    NBodyWnd(const NBodyWnd& orig);
+    NBodyWnd(const NBodyWnd &orig);
 
     void DrawBodies();
     void DrawStat();
@@ -54,15 +51,14 @@ private:
     void DrawCenterOfMass();
     void DrawNode(BHTreeNode *pNode, int level);
 
-    ModelNBody *m_pModel;
-    IIntegrator *m_pSolver;
+    ModelNBody *_pModel;
+    IIntegrator *_pSolver;
 
-    int m_camOrient;    ///< Index of the camera orientation to use
-    uint32_t m_flags;   ///< The display flags
-    bool m_bDumpState = false; 
-    bool m_bDumpImage = false;
-    std::ofstream m_outfile;
+    int _camOrient;  ///< Index of the camera orientation to use
+    uint32_t _flags; ///< The display flags
+    bool _bDumpState = false;
+    bool _bDumpImage = false;
+    std::ofstream _outfile;
 };
 
 #endif
-
