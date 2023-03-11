@@ -10,7 +10,7 @@
 
 
 /** \brief Model class for handling th n-body problem. */
-class ModelNBody : public IModel
+class ModelNBody final : public IModel
 {
 public:
 
@@ -21,9 +21,9 @@ public:
     void InitCollision();
     void Init3Body();
 
-    virtual void Eval(double *state, double time, double *deriv);
-    virtual bool IsFinished(double *state);
-    virtual double* GetInitialState();
+    virtual void Eval(double *state, double time, double *deriv) override;
+    virtual bool IsFinished(double *state) override;
+    virtual double* GetInitialState() override;
 
     double GetSuggestedTimeStep() const;
     double GetTimeUnit() const;

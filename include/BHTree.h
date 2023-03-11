@@ -8,6 +8,7 @@
 #include "Vector.h"
 #include "Types.h"
 
+
 //------------------------------------------------------------------------------
 struct State
 {
@@ -106,4 +107,4 @@ private:
     static DebugStat s_stat;
 };
 
-#endif
+#endif // BH_TREE_H

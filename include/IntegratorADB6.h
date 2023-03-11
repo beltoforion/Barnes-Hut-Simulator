@@ -3,6 +3,7 @@
 
 #include "IIntegrator.h"
 
+
 /** \brief Inplementation of the simple Euler integration scheme. */
 class IntegratorADB6 final : public IIntegrator
 {
@@ -15,9 +16,9 @@ public:
     virtual void Reverse() override;
 
 private:
-    double *m_state;
-    double *m_f[6];
-    double m_c[6];
+    double *_state;
+    double *_f[6];
+    double _c[6];
 };
 
 #endif // _INTEGRATOR_ADB6_H

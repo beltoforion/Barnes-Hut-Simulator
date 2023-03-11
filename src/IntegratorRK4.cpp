@@ -6,7 +6,7 @@
 #include <sstream>
 
 
-//------------------------------------------------------------------------------
+
 IntegratorRK4::IntegratorRK4(IModel *pModel, double h)
   :IIntegrator(pModel, h)
   ,m_state(new double [m_dim])
@@ -24,7 +24,7 @@ IntegratorRK4::IntegratorRK4(IModel *pModel, double h)
   SetID(ss.str());
 }
 
-//------------------------------------------------------------------------------
+
 IntegratorRK4::~IntegratorRK4()
 {
   delete [] m_state;
@@ -35,7 +35,7 @@ IntegratorRK4::~IntegratorRK4()
   delete [] m_k4;
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Performs a single integration step. */
 void IntegratorRK4::SingleStep()
 {
@@ -65,7 +65,7 @@ void IntegratorRK4::SingleStep()
   m_time += m_h;
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Sets the initial state of the simulation. */
 void IntegratorRK4::SetInitialState(double *state)
 {
@@ -81,7 +81,7 @@ void IntegratorRK4::SetInitialState(double *state)
   m_time = 0;
 }
 
-//------------------------------------------------------------------------------
+
 double* IntegratorRK4::GetState() const
 {
   return m_state;

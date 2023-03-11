@@ -8,7 +8,6 @@
 #include "IModel.h"
 
 
-//------------------------------------------------------------------------------
 /** \brief Base class for a variety of integration algorithms. */
 class IIntegrator
 {

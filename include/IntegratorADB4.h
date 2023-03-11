@@ -15,8 +15,8 @@ public:
     virtual double *GetState() const override;
 
 private:
-    double *m_state;
-    double *m_f[4];
+    double *_state;
+    double *_f[4];
 };
 
 #endif // _INTEGRATOR_ADB4_H

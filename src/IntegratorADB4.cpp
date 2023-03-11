@@ -7,15 +7,17 @@
 
 
 IntegratorADB4::IntegratorADB4(IModel *pModel, double h)
-    : IIntegrator(pModel, h), m_state(), m_f()
+    :IIntegrator(pModel, h)
+    ,_state()
+    ,_f()
 {
     if (pModel == nullptr)
         throw std::runtime_error("Model pointer may not be NULL.");
 
-    m_state = new double[m_dim];
+    _state = new double[m_dim];
     for (unsigned i = 0; i < 4; ++i)
     {
-        m_f[i] = new double[m_dim];
+        _f[i] = new double[m_dim];
     }
 
     std::stringstream ss;
@@ -25,11 +27,11 @@ IntegratorADB4::IntegratorADB4(IModel *pModel, double h)
 
 IntegratorADB4::~IntegratorADB4()
 {
-    delete[] m_state;
+    delete[] _state;
 
     for (unsigned i = 0; i < 4; ++i)
     {
-        delete m_f[i];
+        delete _f[i];
     }
 }
 
@@ -39,15 +41,15 @@ void IntegratorADB4::SingleStep()
 {
     for (std::size_t i = 0; i < m_dim; ++i)
     {
-        m_state[i] += m_h / 24.0 * (55 * m_f[3][i] - 59 * m_f[2][i] + 37 * m_f[1][i] - 9 * m_f[0][i]);
+        _state[i] += m_h / 24.0 * (55 * _f[3][i] - 59 * _f[2][i] + 37 * _f[1][i] - 9 * _f[0][i]);
 
-        m_f[0][i] = m_f[1][i];
-        m_f[1][i] = m_f[2][i];
-        m_f[2][i] = m_f[3][i];
+        _f[0][i] = _f[1][i];
+        _f[1][i] = _f[2][i];
+        _f[2][i] = _f[3][i];
     }
 
     m_time += m_h;
-    m_pModel->Eval(m_state, m_time, m_f[3]);
+    m_pModel->Eval(_state, m_time, _f[3]);
 }
 
 /** \brief Sets the initial state of the simulation. */
@@ -82,7 +84,7 @@ void IntegratorADB4::SetInitialState(double *state)
       m_time += m_h;
     */
     for (unsigned i = 0; i < m_dim; ++i)
-        m_state[i] = state[i];
+        _state[i] = state[i];
 
     m_time = 0;
     double k1[m_dim],
@@ -94,36 +96,37 @@ void IntegratorADB4::SetInitialState(double *state)
     for (std::size_t n = 0; n < 3; ++n)
     {
         // k1
-        m_pModel->Eval(m_state, m_time, k1);
+        m_pModel->Eval(_state, m_time, k1);
         for (std::size_t i = 0; i < m_dim; ++i)
-            tmp[i] = m_state[i] + m_h * 0.5 * k1[i];
+            tmp[i] = _state[i] + m_h * 0.5 * k1[i];
 
         // k2
         m_pModel->Eval(tmp, m_time + m_h * 0.5, k2);
         for (std::size_t i = 0; i < m_dim; ++i)
-            tmp[i] = m_state[i] + m_h * 0.5 * k2[i];
+            tmp[i] = _state[i] + m_h * 0.5 * k2[i];
 
         // k3
         m_pModel->Eval(tmp, m_time + m_h * 0.5, k3);
         for (std::size_t i = 0; i < m_dim; ++i)
-            tmp[i] = m_state[i] + m_h * k3[i];
+            tmp[i] = _state[i] + m_h * k3[i];
 
         // k4
         m_pModel->Eval(tmp, m_time + m_h, k4);
 
         for (std::size_t i = 0; i < m_dim; ++i)
         {
-            m_state[i] += m_h / 6 * (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]);
-            m_f[n][i] = k1[i];
+            _state[i] += m_h / 6 * (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]);
+            _f[n][i] = k1[i];
         }
 
         m_time += m_h;
     }
-    m_pModel->Eval(m_state, m_time, m_f[3]);
+
+    m_pModel->Eval(_state, m_time, _f[3]);
 }
 
 
 double *IntegratorADB4::GetState() const
 {
-    return m_state;
+    return _state;
 }
