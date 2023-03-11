@@ -5,18 +5,18 @@
 
 
 /** \brief Inplementation of the simple Euler integration scheme. */
-class IntegratorADB4 : public IIntegrator
+class IntegratorADB4 final : public IIntegrator
 {
 public:
     IntegratorADB4(IModel *pModel, double h);
     virtual ~IntegratorADB4();
-    virtual void SingleStep();
-    virtual void SetInitialState(double *state);
-    virtual double *GetState() const;
+    virtual void SingleStep() override;
+    virtual void SetInitialState(double *state) override;
+    virtual double *GetState() const override;
 
 private:
     double *m_state;
     double *m_f[4];
 };
 
-#endif /* _INTEGRATORHEUN_H */
+#endif // _INTEGRATOR_ADB4_H

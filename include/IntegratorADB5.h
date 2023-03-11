@@ -1,10 +1,3 @@
-/*
- * File:   integratorheun.h
- * Author: user
- *
- * Created on 3. Mai 2009, 23:40
- */
-
 #ifndef _INTEGRATOR_ADB5_H
 #define _INTEGRATOR_ADB5_H
 
@@ -12,19 +5,20 @@
 #include "IntegratorRK4.h"
 
 /** \brief Inplementation of the simple Euler integration scheme. */
-class IntegratorADB5 : public IIntegrator {
+class IntegratorADB5 final : public IIntegrator
+{
 public:
-  IntegratorADB5(IModel *pModel, double h);
-  virtual ~IntegratorADB5();
-  virtual void SingleStep();
-  virtual void SetInitialState(double *state);
-  virtual double *GetState() const;
+    IntegratorADB5(IModel *pModel, double h);
+    virtual ~IntegratorADB5();
+    virtual void SingleStep() override;
+    virtual void SetInitialState(double *state) override;
+    virtual double *GetState() const override;
 
 private:
-  double *m_state;
-  double *m_f[6];
-  double m_c[6];
-  IntegratorRK4 m_rk4;
+    double *m_state;
+    double *m_f[6];
+    double m_c[6];
+    IntegratorRK4 m_rk4;
 };
 
-#endif /* _INTEGRATORHEUN_H */
+#endif // _INTEGRATOR_ADB5_H
