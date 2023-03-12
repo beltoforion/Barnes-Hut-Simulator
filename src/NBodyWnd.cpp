@@ -7,6 +7,7 @@
 #include <omp.h>
 
 #include "IntegratorRK4.h"
+#include "IntegratorRK5.h"
 #include "IntegratorADB6.h"
 
 
@@ -34,6 +35,7 @@ void NBodyWnd::Init(int num)
     delete _pSolver;
 
     //  _pSolver = new IntegratorADB4(_pModel, 5);
+//    _pSolver = new IntegratorRK5(_pModel, _pModel->GetSuggestedTimeStep());
     _pSolver = new IntegratorADB6(_pModel, _pModel->GetSuggestedTimeStep());
     _pSolver->SetInitialState(_pModel->GetInitialState());
 

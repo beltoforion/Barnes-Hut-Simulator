@@ -24,6 +24,7 @@ public:
     virtual void SetInitialState(double *state) = 0;
     virtual void SingleStep() = 0;
     virtual double* GetState() const = 0;
+
     const std::string& GetID() const;
 
 protected:
@@ -40,7 +41,6 @@ protected:
     double m_h;                     ///< The timestep size
     double m_time;                  ///< The absolute time
     double m_err;                   ///< The local error if supported by the integration scheme
-    const unsigned m_dim;           ///< Number of equations in the problem
     std::string m_sID;
 
 private:

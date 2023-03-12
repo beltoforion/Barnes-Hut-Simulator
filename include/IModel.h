@@ -9,13 +9,17 @@ class IModel
 {
 public:
 
-    IModel(const std::string &sName, unsigned dim=1);
-    virtual ~IModel();
+    IModel(const std::string &name, unsigned dim=1)
+        :_dim(dim)
+        ,_name(name)
+    {}
 
-    unsigned GetDim() const;
-    void SetDim(unsigned dim) ;
+    virtual ~IModel() {}
 
-    std::string GetName() const;
+    unsigned GetDim() const noexcept { return _dim; }   
+    void SetDim(unsigned dim) noexcept { _dim = dim; }
+
+    std::string GetName() const noexcept { return _name; }
 
     virtual void Eval(double *state, double time, double *deriv_in) = 0;
     virtual bool IsFinished(double *state) = 0;
@@ -23,8 +27,8 @@ public:
 
 private:
     unsigned _dim;
-    std::string _sName;
+    std::string _name;
 };
 
-#endif	/* _IMODEL_HPP */
+#endif	// _IMODEL_HPP
 

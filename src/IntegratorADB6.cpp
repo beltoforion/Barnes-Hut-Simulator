@@ -7,12 +7,12 @@
 #include <cstring>
 
 
-IntegratorADB6::IntegratorADB6(IModel *pModel, double h)
-    :IIntegrator(pModel, h)
+IntegratorADB6::IntegratorADB6(IModel *model, double h)
+    :IIntegrator(model, h)
     ,_state()
     ,_f()
 {
-    if (pModel == nullptr)
+    if (model == nullptr)
         throw std::runtime_error("Model pointer may not be NULL.");
 
     _c[0] = 4277.0 / 1440.0;
@@ -22,11 +22,11 @@ IntegratorADB6::IntegratorADB6(IModel *pModel, double h)
     _c[4] = 2877.0 / 1440.0;
     _c[5] = -475.0 / 1440.0;
 
-    _state = new double[m_dim];
+    _state = new double[model->GetDim()];
     for (unsigned i = 0; i < 6; ++i)
     {
-        _f[i] = new double[m_dim];
-        std::memset(_f[i], 0, m_dim * sizeof(double));
+        _f[i] = new double[model->GetDim()];
+        std::memset(_f[i], 0, model->GetDim() * sizeof(double));
     }
 
     std::stringstream ss;
@@ -54,7 +54,7 @@ void IntegratorADB6::Reverse()
 /** \brief Performs a single integration step. */
 void IntegratorADB6::SingleStep()
 {
-    for (std::size_t i = 0; i < m_dim; ++i)
+    for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
     {
         _state[i] += m_h * (_c[0] * _f[5][i] +
                             _c[1] * _f[4][i] +
@@ -78,37 +78,37 @@ void IntegratorADB6::SingleStep()
 /** \brief Sets the initial state of the simulation. */
 void IntegratorADB6::SetInitialState(double *state)
 {
-    for (unsigned i = 0; i < m_dim; ++i)
+    for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
         _state[i] = state[i];
 
     m_time = 0;
-    double k1[m_dim],
-           k2[m_dim],
-           k3[m_dim],
-           k4[m_dim],
-           tmp[m_dim];
+    double k1[m_pModel->GetDim()],
+           k2[m_pModel->GetDim()],
+           k3[m_pModel->GetDim()],
+           k4[m_pModel->GetDim()],
+           tmp[m_pModel->GetDim()];
 
     for (std::size_t n = 0; n < 5; ++n)
     {
         // k1
         m_pModel->Eval(_state, m_time, k1);
-        for (std::size_t i = 0; i < m_dim; ++i)
+        for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
             tmp[i] = _state[i] + m_h * 0.5 * k1[i];
 
         // k2
         m_pModel->Eval(tmp, m_time + m_h * 0.5, k2);
-        for (std::size_t i = 0; i < m_dim; ++i)
+        for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
             tmp[i] = _state[i] + m_h * 0.5 * k2[i];
 
         // k3
         m_pModel->Eval(tmp, m_time + m_h * 0.5, k3);
-        for (std::size_t i = 0; i < m_dim; ++i)
+        for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
             tmp[i] = _state[i] + m_h * k3[i];
 
         // k4
         m_pModel->Eval(tmp, m_time + m_h, k4);
 
-        for (std::size_t i = 0; i < m_dim; ++i)
+        for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
         {
             _state[i] += m_h / 6 * (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]);
             _f[n][i] = k1[i];

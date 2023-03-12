@@ -16,12 +16,12 @@ public:
     virtual double *GetState() const override;
 
 private:
-    double *m_state;
-    double *m_tmp;
-    double *m_k1;
-    double *m_k2;
-    double *m_k3;
-    double *m_k4;
+    double *_state;
+    double *_tmp;
+    double *_k1;
+    double *_k2;
+    double *_k3;
+    double *_k4;
 };
 
 #endif // _INTEGRATOR_RK4_H

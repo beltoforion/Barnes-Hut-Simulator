@@ -8,12 +8,12 @@
 
 IntegratorRK4::IntegratorRK4(IModel *pModel, double h)
     :IIntegrator(pModel, h)
-    ,m_state(new double[m_dim])
-    ,m_tmp(new double[m_dim])
-    ,m_k1(new double[m_dim])
-    ,m_k2(new double[m_dim])
-    ,m_k3(new double[m_dim])
-    ,m_k4(new double[m_dim])
+    ,_state(new double[pModel->GetDim()])
+    ,_tmp(new double[pModel->GetDim()])
+    ,_k1(new double[pModel->GetDim()])
+    ,_k2(new double[pModel->GetDim()])
+    ,_k3(new double[pModel->GetDim()])
+    ,_k4(new double[pModel->GetDim()])
 {
     if (pModel == nullptr)
         throw std::runtime_error("Model pointer may not be NULL.");
@@ -26,12 +26,12 @@ IntegratorRK4::IntegratorRK4(IModel *pModel, double h)
 
 IntegratorRK4::~IntegratorRK4()
 {
-    delete[] m_state;
-    delete[] m_tmp;
-    delete[] m_k1;
-    delete[] m_k2;
-    delete[] m_k3;
-    delete[] m_k4;
+    delete[] _state;
+    delete[] _tmp;
+    delete[] _k1;
+    delete[] _k2;
+    delete[] _k3;
+    delete[] _k4;
 }
 
 
@@ -41,25 +41,25 @@ void IntegratorRK4::SingleStep()
     assert(m_pModel);
 
     // k1
-    m_pModel->Eval(m_state, m_time, m_k1);
-    for (std::size_t i = 0; i < m_dim; ++i)
-        m_tmp[i] = m_state[i] + m_h * 0.5 * m_k1[i];
+    m_pModel->Eval(_state, m_time, _k1);
+    for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
+        _tmp[i] = _state[i] + m_h * 0.5 * _k1[i];
 
     // k2
-    m_pModel->Eval(m_tmp, m_time + m_h * 0.5, m_k2);
-    for (std::size_t i = 0; i < m_dim; ++i)
-        m_tmp[i] = m_state[i] + m_h * 0.5 * m_k2[i];
+    m_pModel->Eval(_tmp, m_time + m_h * 0.5, _k2);
+    for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
+        _tmp[i] = _state[i] + m_h * 0.5 * _k2[i];
 
     // k3
-    m_pModel->Eval(m_tmp, m_time + m_h * 0.5, m_k3);
-    for (std::size_t i = 0; i < m_dim; ++i)
-        m_tmp[i] = m_state[i] + m_h * m_k3[i];
+    m_pModel->Eval(_tmp, m_time + m_h * 0.5, _k3);
+    for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
+        _tmp[i] = _state[i] + m_h * _k3[i];
 
     // k4
-    m_pModel->Eval(m_tmp, m_time + m_h, m_k4);
+    m_pModel->Eval(_tmp, m_time + m_h, _k4);
 
-    for (std::size_t i = 0; i < m_dim; ++i)
-        m_state[i] += m_h / 6 * (m_k1[i] + 2 * (m_k2[i] + m_k3[i]) + m_k4[i]);
+    for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
+        _state[i] += m_h / 6 * (_k1[i] + 2 * (_k2[i] + _k3[i]) + _k4[i]);
 
     m_time += m_h;
 }
@@ -68,13 +68,13 @@ void IntegratorRK4::SingleStep()
 /** \brief Sets the initial state of the simulation. */
 void IntegratorRK4::SetInitialState(double *state)
 {
-    for (unsigned i = 0; i < m_dim; ++i)
+    for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
     {
-        m_state[i] = state[i];
-        m_k1[i] = 0;
-        m_k2[i] = 0;
-        m_k3[i] = 0;
-        m_k4[i] = 0;
+        _state[i] = state[i];
+        _k1[i] = 0;
+        _k2[i] = 0;
+        _k3[i] = 0;
+        _k4[i] = 0;
     }
 
     m_time = 0;
@@ -83,5 +83,5 @@ void IntegratorRK4::SetInitialState(double *state)
 
 double *IntegratorRK4::GetState() const
 {
-    return m_state;
+    return _state;
 }

@@ -43,7 +43,6 @@ set(SOURCES
     src/main.cpp
     src/BHTree.cpp
     src/IIntegrator.cpp
-    src/IModel.cpp
     src/IntegratorADB5.cpp
     src/IntegratorADB6.cpp
     src/IntegratorRK4.cpp
