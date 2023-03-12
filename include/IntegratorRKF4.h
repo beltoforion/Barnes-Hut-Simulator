@@ -16,16 +16,16 @@ public:
     void SetMaximumError(double err);
 
 private:
-    double *m_state;
-    double *m_tmp;
-    double *m_k1;
-    double *m_k2;
-    double *m_k3;
-    double *m_k4;
-    double *m_k5;
-    double *m_k6;
-    double *m_error;
-    double m_maxErr;
+    double *_state;
+    double *_tmp;
+    double *_k1;
+    double *_k2;
+    double *_k3;
+    double *_k4;
+    double *_k5;
+    double *_k6;
+    double *_error;
+    double _maxErr;
 };
 
 #endif // _INTEGRATOR_RKF4_H
