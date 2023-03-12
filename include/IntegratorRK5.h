@@ -3,7 +3,7 @@
 
 #include "IIntegrator.h"
 
-/** \brief Inplementation of the simple Euler integration scheme. */
+/** \brief Implementation of the simple Euler integration scheme. */
 class IntegratorRK5 final : public IIntegrator
 {
 public:

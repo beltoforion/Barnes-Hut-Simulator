@@ -4,7 +4,7 @@
 #include "IIntegrator.h"
 
 
-/** \brief Inplementation of the Runge-Kutta 4th order integration scheme. */
+/** \brief Implementation of the Runge-Kutta 4th order integration scheme. */
 class IntegratorRK4 final : public IIntegrator
 {
 public:
