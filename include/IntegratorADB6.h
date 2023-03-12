@@ -4,7 +4,7 @@
 #include "IIntegrator.h"
 
 
-/** \brief Inplementation of the simple Euler integration scheme. */
+/** \brief Implementation of the ADB6 integration scheme. */
 class IntegratorADB6 final : public IIntegrator
 {
 public:

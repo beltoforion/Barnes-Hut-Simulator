@@ -11,15 +11,16 @@
 
 
 /** \brief Main window of th n-body simulation. */
-class NBodyWnd : public SDLWindow
+class NBodyWnd final : public SDLWindow
 {
 public:
+
     NBodyWnd(int sz, std::string caption);
     virtual ~NBodyWnd();
 
-    virtual void Render();
-    virtual void Update();
-    virtual void OnProcessEvents(uint8_t type);
+    virtual void Render() override;
+    virtual void Update() override;
+    virtual void OnProcessEvents(uint8_t type) override;
 
     void Init(int num);
 

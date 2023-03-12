@@ -1,12 +1,13 @@
 #ifndef _MODEL_N_BODY_H
 #define	_MODEL_N_BODY_H
 
-//---------------------------------------------------------------------
+#include <cmath>
+
+#include "Constants.h"
 #include "IModel.h"
 #include "Vector.h"
 #include "BHTree.h"
 #include "Types.h"
-
 
 
 /** \brief Model class for handling th n-body problem. */
@@ -60,12 +61,9 @@ private:
     double _roi;
     double _timeStep;
 
-    const double mass_sun;
-    const double pc_in_m;
-    const double gamma_si;
-    const double gamma_1;
-    const double time_1;
-    
+    static constexpr double gamma_1 = Constants::Gamma / (Constants::ParsecInMeter * Constants::ParsecInMeter * Constants::ParsecInMeter) * Constants::MassOfSun * (365.25 * 86400) * (365.25 * 86400);
+    const double time_1 = std::sqrt((Constants::ParsecInMeter * Constants::ParsecInMeter * Constants::ParsecInMeter) / (Constants::Gamma * Constants::MassOfSun)) / (365.25 * 86400);
+
     int _num;
     bool _bVerbose;
 };

@@ -1,10 +1,8 @@
 #ifndef _IINTEGRATOR_H
 #define	_IINTEGRATOR_H
 
-//--- Standard includes --------------------------------------------------------
 #include <memory>
 
-//------------------------------------------------------------------------------
 #include "IModel.h"
 
 

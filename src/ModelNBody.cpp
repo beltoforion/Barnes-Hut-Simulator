@@ -22,11 +22,6 @@ ModelNBody::ModelNBody()
     ,_camPos()
     ,_roi(1)
     ,_timeStep(1)
-    ,mass_sun(1.988435e30)
-    ,pc_in_m(3.08567758129e16)
-    ,gamma_si(6.67428e-11)
-    ,gamma_1(gamma_si / (pc_in_m * pc_in_m * pc_in_m) * mass_sun * (365.25 * 86400) * (365.25 * 86400))
-    ,time_1(sqrt((pc_in_m * pc_in_m * pc_in_m) / (gamma_si * mass_sun)) / (365.25 * 86400))
     ,_num(0)
     ,_bVerbose(false)
 {
@@ -37,26 +32,31 @@ ModelNBody::ModelNBody()
     //  Init3Body();
 }
 
+
 ModelNBody::~ModelNBody()
 {
     delete _pInitial;
     delete _pAux;
 }
 
+
 void ModelNBody::SetROI(double roi)
 {
     _roi = roi;
 }
+
 
 double ModelNBody::GetSuggestedTimeStep() const
 {
     return _timeStep;
 }
 
+
 double ModelNBody::GetROI() const
 {
     return _roi;
 }
+
 
 Vec3D ModelNBody::GetCenterOfMass() const
 {
@@ -64,20 +64,24 @@ Vec3D ModelNBody::GetCenterOfMass() const
     return Vec3D(cm2d.x, cm2d.y, 0);
 }
 
+
 const Vec3D &ModelNBody::GetCamDir() const
 {
     return _camDir;
 }
+
 
 const Vec3D &ModelNBody::GetCamPos() const
 {
     return _camPos;
 }
 
+
 double *ModelNBody::GetInitialState()
 {
     return reinterpret_cast<double *>(_pInitial);
 }
+
 
 void ModelNBody::GetOrbitalVelocity(const ParticleData &p1, const ParticleData &p2)
 {
@@ -105,6 +109,7 @@ void ModelNBody::GetOrbitalVelocity(const ParticleData &p1, const ParticleData &
     vy = (-r[0] / dist) * v;
 }
 
+
 void ModelNBody::ResetDim(int num, double stepsize)
 {
     _num = num;
@@ -123,6 +128,7 @@ void ModelNBody::ResetDim(int num, double stepsize)
     _min.x = _min.y = std::numeric_limits<double>::max();
     _center = Vec2D(0, 0); // for storing the center of mass
 }
+
 
 void ModelNBody::Init()
 {
@@ -233,6 +239,7 @@ hell:
     std::cout << "  roi    = " << _roi << "\n";
 }
 
+
 void ModelNBody::InitCollision()
 {
     // Reset model size
@@ -326,6 +333,7 @@ void ModelNBody::InitCollision()
     std::cout << "  l  =" << l << "\n";
 }
 
+
 void ModelNBody::Init3Body()
 {
     // Reset model size
@@ -391,6 +399,7 @@ void ModelNBody::Init3Body()
     std::cout << "  l  =" << l << "\n";
 }
 
+
 void ModelNBody::CalcBHArea(const ParticleData &data)
 {
     /*
@@ -423,6 +432,7 @@ void ModelNBody::CalcBHArea(const ParticleData &data)
       _max.y = c.y + l/2.0;
     */
 }
+
 
 /** \brief Build the barnes hut tree by adding all particles that are inside
            the region of interest.
@@ -476,40 +486,48 @@ void ModelNBody::BuiltTree(const ParticleData &all)
     _center = _root.GetCenterOfMass();
 }
 
+
 const PODAuxState *ModelNBody::GetAuxState() const
 {
     return _pAux;
 }
+
 
 BHTreeNode *ModelNBody::GetRootNode()
 {
     return &_root;
 }
 
+
 int ModelNBody::GetN() const
 {
     return _num;
 }
+
 
 double ModelNBody::GetTheta() const
 {
     return _root.GetTheta();
 }
 
+
 void ModelNBody::SetVerbose(bool bVerbose)
 {
     _bVerbose = bVerbose;
 }
+
 
 void ModelNBody::SetTheta(double theta)
 {
     _root.SetTheta(theta);
 }
 
+
 double ModelNBody::GetTimeUnit() const
 {
     return time_1;
 }
+
 
 void ModelNBody::Eval(double *a_state, double a_time, double *a_deriv)
 {
@@ -550,6 +568,7 @@ void ModelNBody::Eval(double *a_state, double a_time, double *a_deriv)
     _camPos.x = _root.GetCenterOfMass().x;
     _camPos.y = _root.GetCenterOfMass().y;
 }
+
 
 bool ModelNBody::IsFinished(double *state)
 {
