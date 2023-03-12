@@ -26,7 +26,7 @@ public:
 
 private:
 
-    enum DisplayState
+    enum DisplayState : unsigned int
     {
         dspNONE = 0,
         dspAXIS = 1 << 0,

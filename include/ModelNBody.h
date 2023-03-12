@@ -27,7 +27,6 @@ public:
     virtual double* GetInitialState() override;
 
     double GetSuggestedTimeStep() const;
-    double GetTimeUnit() const;
     double GetTheta() const;
     BHTreeNode* GetRootNode();
     const PODAuxState* GetAuxState() const;
@@ -62,8 +61,7 @@ private:
     double _timeStep;
 
     static constexpr double gamma_1 = Constants::Gamma / (Constants::ParsecInMeter * Constants::ParsecInMeter * Constants::ParsecInMeter) * Constants::MassOfSun * (365.25 * 86400) * (365.25 * 86400);
-    const double time_1 = std::sqrt((Constants::ParsecInMeter * Constants::ParsecInMeter * Constants::ParsecInMeter) / (Constants::Gamma * Constants::MassOfSun)) / (365.25 * 86400);
-
+  
     int _num;
     bool _bVerbose;
 };

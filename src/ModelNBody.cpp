@@ -523,12 +523,6 @@ void ModelNBody::SetTheta(double theta)
 }
 
 
-double ModelNBody::GetTimeUnit() const
-{
-    return time_1;
-}
-
-
 void ModelNBody::Eval(double *a_state, double a_time, double *a_deriv)
 {
     // wrap the complete particle data together for easier treatment

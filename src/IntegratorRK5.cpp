@@ -25,6 +25,7 @@ IntegratorRK5::IntegratorRK5(IModel *pModel, double h)
     SetID(ss.str());
 }
 
+
 IntegratorRK5::~IntegratorRK5()
 {
     delete[] _state;
@@ -36,6 +37,7 @@ IntegratorRK5::~IntegratorRK5()
     delete[] _k5;
     delete[] _k6;
 }
+
 
 /** \brief Performs a single integration step. */
 void IntegratorRK5::SingleStep()
@@ -86,6 +88,7 @@ void IntegratorRK5::SingleStep()
     m_time += m_h;
 }
 
+
 /** \brief Sets the initial state of the simulation. */
 void IntegratorRK5::SetInitialState(double *state)
 {
@@ -103,6 +106,7 @@ void IntegratorRK5::SetInitialState(double *state)
 
     m_time = 0;
 }
+
 
 double *IntegratorRK5::GetState() const
 {
