@@ -49,4 +49,4 @@ private:
     IIntegrator& operator=(const IIntegrator &ref);
 };
 
-#endif	/* _IINTEGRATOR_H */
+#endif	// _IINTEGRATOR_H

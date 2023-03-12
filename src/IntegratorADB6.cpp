@@ -1,6 +1,5 @@
 #include "IntegratorADB6.h"
 
-//--- Standard includes --------------------------------------------------------
 #include <cassert>
 #include <stdexcept>
 #include <sstream>
@@ -35,7 +34,7 @@ IntegratorADB6::IntegratorADB6(IModel *pModel, double h)
     SetID(ss.str());
 }
 
-//------------------------------------------------------------------------------
+
 IntegratorADB6::~IntegratorADB6()
 {
     delete[] _state;
@@ -44,14 +43,14 @@ IntegratorADB6::~IntegratorADB6()
         delete[] _f[i];
 }
 
-//------------------------------------------------------------------------------
+
 void IntegratorADB6::Reverse()
 {
     m_h *= -1;
     SetInitialState(GetState());
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief Performs a single integration step. */
 void IntegratorADB6::SingleStep()
 {
