@@ -1,10 +1,8 @@
 #ifndef _SDL_WINDOW_H
 #define _SDL_WINDOW_H
 
-//--- Standard includes --------------------------------------------------------
 #include <string>
 
-//--- SDL and OpenGL includes --------------------------------------------------
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_opengl.h> // opengl support

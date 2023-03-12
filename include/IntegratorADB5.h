@@ -15,10 +15,10 @@ public:
     virtual double *GetState() const override;
 
 private:
-    double *m_state;
-    double *m_f[6];
-    double m_c[6];
-    IntegratorRK4 m_rk4;
+    double *_state;
+    double *_f[6];
+    double _c[6];
+    IntegratorRK4 _rk4;
 };
 
 #endif // _INTEGRATOR_ADB5_H
