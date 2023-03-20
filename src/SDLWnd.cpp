@@ -51,13 +51,13 @@ void SDLWindow::InitFont()
     XCloseDisplay(dpy);
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::KillFont()
 {
     glDeleteLists(s_fontBase, 96);
 }
 
-//-----------------------------------------------------------------------
+
 /* Print our GL text to the screen */
 void SDLWindow::TextOut(const char *fmt, ...)
 {
@@ -81,7 +81,7 @@ void SDLWindow::TextOut(const char *fmt, ...)
     glPopAttrib();                                     // Pops the Display List Bits
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::TextOut(int x, int y, const char *fmt, ...)
 {
     Vec3D p = GetOGLPos(x, y);
@@ -107,7 +107,7 @@ void SDLWindow::TextOut(int x, int y, const char *fmt, ...)
     glPopAttrib();                                     // Pops the Display List Bits
 }
 
-//------------------------------------------------------------------------------
+
 /** \brief get opengl position from a screen position
 
    see also:  http://nehe.gamedev.net/data/articles/article.asp?article=13
@@ -133,7 +133,7 @@ Vec3D SDLWindow::GetOGLPos(int x, int y)
     return Vec3D(posX, posY, posZ);
 }
 
-//-----------------------------------------------------------------------
+
 SDLWindow::SDLWindow(int width, int height, double axisLen, const std::string &caption)
     :_event()
     ,_fov(axisLen)
@@ -165,14 +165,14 @@ SDLWindow::SDLWindow(int width, int height, double axisLen, const std::string &c
     InitGL();
 }
 
-//-----------------------------------------------------------------------
+
 SDLWindow::~SDLWindow()
 {
     KillFont();
     SDL_Quit();
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::InitGL() // We call this right after our OpenGL window is created.
 {
     glShadeModel(GL_SMOOTH);
@@ -182,7 +182,7 @@ void SDLWindow::InitGL() // We call this right after our OpenGL window is create
     SDLWindow::InitFont();
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::SaveToTGA(int idx)
 {
     if (idx == -1)
@@ -195,7 +195,7 @@ void SDLWindow::SaveToTGA(int idx)
     SaveToTGA(ss.str());
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::SaveToTGA(const std::string &sName)
 {
     using std::ios;
@@ -244,39 +244,39 @@ void SDLWindow::SaveToTGA(const std::string &sName)
     file.close();
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::ScaleAxis(double scale)
 {
     _fov *= scale;
     AdjustCamera();
 }
 
-//------------------------------------------------------------------------------
+
 const Vec3D &SDLWindow::GetCamPos() const
 {
     return _camPos;
 }
 
-//------------------------------------------------------------------------------
+
 const Vec3D &SDLWindow::GetCamOrient() const
 {
     return _camOrient;
 }
 
-//------------------------------------------------------------------------------
+
 const Vec3D &SDLWindow::GetCamLookAt() const
 {
     return _camLookAt;
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::SetCameraOrientation(const Vec3D &orient)
 {
     _camOrient = orient;
     AdjustCamera();
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::SetCamera(const Vec3D &pos, const Vec3D &lookAt, const Vec3D &orient)
 {
     _camOrient = orient;
@@ -285,7 +285,7 @@ void SDLWindow::SetCamera(const Vec3D &pos, const Vec3D &lookAt, const Vec3D &or
     AdjustCamera();
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::AdjustCamera()
 {
     glMatrixMode(GL_PROJECTION);
@@ -299,25 +299,25 @@ void SDLWindow::AdjustCamera()
     glMatrixMode(GL_MODELVIEW);
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::SetCaption(const std::string &caption)
 {
     SDL_WM_SetCaption(caption.c_str(), NULL);
 }
 
-//-----------------------------------------------------------------------
+
 double SDLWindow::GetFOV() const
 {
     return _fov;
 }
 
-//-----------------------------------------------------------------------
+
 int SDLWindow::GetFPS() const
 {
     return _fps;
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::DrawAxis(const Vec2D &origin)
 {
     glColor3f(0.3, 0.3, 0.3);
@@ -367,7 +367,7 @@ void SDLWindow::DrawAxis(const Vec2D &origin)
     glPopMatrix();
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::MainLoop()
 {
     int ct = 0;
@@ -394,36 +394,36 @@ void SDLWindow::MainLoop()
     }
 }
 
-//-----------------------------------------------------------------------
+
 SDL_Surface *SDLWindow::Surface()
 {
     return _pScreen;
 }
 
-//-----------------------------------------------------------------------
+
 int SDLWindow::GetWidth() const
 {
     return _width;
 }
 
-//-----------------------------------------------------------------------
+
 int SDLWindow::GetHeight() const
 {
     return _height;
 }
 
-//-----------------------------------------------------------------------
+
 void SDLWindow::ExitMainLoop()
 {
     _bRunning = false;
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::OnProcessEvents(uint8_t type)
 {
 }
 
-//------------------------------------------------------------------------------
+
 void SDLWindow::PollEvents()
 {
     while (SDL_PollEvent(&_event))
