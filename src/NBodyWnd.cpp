@@ -67,7 +67,7 @@ void NBodyWnd::Update()
     if (_bDumpState && ct % 1000000 == 0)
     {
         int num = _pModel->GetDim() / 4;
-        PODState *state = reinterpret_cast<PODState *>(_pSolver->GetState());
+        const PODState *state = reinterpret_cast<const PODState *>(_pSolver->GetState());
         _outfile << _pSolver->GetTime() << ", ";
         for (int i = 0; i < num; ++i)
         {
@@ -127,12 +127,12 @@ void NBodyWnd::Render()
     SDL_GL_SwapBuffers();
 }
 
+
 void NBodyWnd::DrawBodies()
 {
     assert(_pSolver);
 
-    PODState *state = reinterpret_cast<PODState *>(_pSolver->GetState());
-    //  const PODAuxState *state_aux  = _pModel->GetAuxState();
+    const PODState *state = reinterpret_cast<const PODState *>(_pSolver->GetState());
 
     glColor3f(1, 1, 1);
     glPointSize(2); // state_aux[i].mass/10);
@@ -145,6 +145,7 @@ void NBodyWnd::DrawBodies()
 
     glEnd();
 }
+
 
 void NBodyWnd::DrawStat()
 {

@@ -8,7 +8,6 @@
 
 IntegratorRK4::IntegratorRK4(IModel *pModel, double h)
     :IIntegrator(pModel, h)
-    ,_state(new double[pModel->GetDim()])
     ,_tmp(new double[pModel->GetDim()])
     ,_k1(new double[pModel->GetDim()])
     ,_k2(new double[pModel->GetDim()])
@@ -26,7 +25,6 @@ IntegratorRK4::IntegratorRK4(IModel *pModel, double h)
 
 IntegratorRK4::~IntegratorRK4()
 {
-    delete[] _state;
     delete[] _tmp;
     delete[] _k1;
     delete[] _k2;
@@ -41,7 +39,7 @@ void IntegratorRK4::SingleStep()
     assert(m_pModel);
 
     // k1
-    m_pModel->Eval(_state, m_time, _k1);
+    m_pModel->Eval(_state.data(), m_time, _k1);
     for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
         _tmp[i] = _state[i] + m_h * 0.5 * _k1[i];
 
@@ -66,7 +64,7 @@ void IntegratorRK4::SingleStep()
 
 
 /** \brief Sets the initial state of the simulation. */
-void IntegratorRK4::SetInitialState(double *state)
+void IntegratorRK4::SetInitialState(const double *state)
 {
     for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
     {
@@ -78,10 +76,4 @@ void IntegratorRK4::SetInitialState(double *state)
     }
 
     m_time = 0;
-}
-
-
-double *IntegratorRK4::GetState() const
-{
-    return _state;
 }
