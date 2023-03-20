@@ -10,9 +10,11 @@ public:
     IntegratorRK5(IModel *pModel, double h);
     virtual ~IntegratorRK5();
     virtual void SingleStep() override;
-    virtual void SetInitialState(const double *state) override;
+    virtual void SetInitialState(double *state) override;
+    virtual double *GetState() const override;
 
 private:
+    double *_state;
     double *_tmp;
     double *_k1;
     double *_k2;

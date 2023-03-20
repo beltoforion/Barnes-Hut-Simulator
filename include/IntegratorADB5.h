@@ -11,9 +11,11 @@ public:
     IntegratorADB5(IModel *pModel, double h);
     virtual ~IntegratorADB5();
     virtual void SingleStep() override;
-    virtual void SetInitialState(const double *state) override;
+    virtual void SetInitialState(double *state) override;
+    virtual double *GetState() const override;
 
 private:
+    double *_state;
     double *_f[6];
     double _c[6];
     IntegratorRK4 _rk4;

@@ -9,18 +9,20 @@
 
 IntegratorADB6::IntegratorADB6(IModel *model, double h)
     :IIntegrator(model, h)
+    ,_state()
     ,_f()
 {
     if (model == nullptr)
         throw std::runtime_error("Model pointer may not be NULL.");
 
-    _c[0] =  4277.0 / 1440.0;
+    _c[0] = 4277.0 / 1440.0;
     _c[1] = -7923.0 / 1440.0;
-    _c[2] =  9982.0 / 1440.0;
+    _c[2] = 9982.0 / 1440.0;
     _c[3] = -7298.0 / 1440.0;
-    _c[4] =  2877.0 / 1440.0;
-    _c[5] =  -475.0 / 1440.0;
+    _c[4] = 2877.0 / 1440.0;
+    _c[5] = -475.0 / 1440.0;
 
+    _state = new double[model->GetDim()];
     for (unsigned i = 0; i < 6; ++i)
     {
         _f[i] = new double[model->GetDim()];
@@ -35,6 +37,8 @@ IntegratorADB6::IntegratorADB6(IModel *model, double h)
 
 IntegratorADB6::~IntegratorADB6()
 {
+    delete[] _state;
+
     for (unsigned i = 0; i < 6; ++i)
         delete[] _f[i];
 }
@@ -67,12 +71,12 @@ void IntegratorADB6::SingleStep()
     }
 
     m_time += m_h;
-    m_pModel->Eval(&_state[0], m_time, _f[5]);
+    m_pModel->Eval(_state, m_time, _f[5]);
 }
 
 
 /** \brief Sets the initial state of the simulation. */
-void IntegratorADB6::SetInitialState(const double *state)
+void IntegratorADB6::SetInitialState(double *state)
 {
     for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
         _state[i] = state[i];
@@ -87,7 +91,7 @@ void IntegratorADB6::SetInitialState(const double *state)
     for (std::size_t n = 0; n < 5; ++n)
     {
         // k1
-        m_pModel->Eval(&_state[0], m_time, k1);
+        m_pModel->Eval(_state, m_time, k1);
         for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
             tmp[i] = _state[i] + m_h * 0.5 * k1[i];
 
@@ -112,5 +116,11 @@ void IntegratorADB6::SetInitialState(const double *state)
 
         m_time += m_h;
     }
-    m_pModel->Eval(&_state[0], m_time, _f[5]);
+    m_pModel->Eval(_state, m_time, _f[5]);
+}
+
+
+double *IntegratorADB6::GetState() const
+{
+    return _state;
 }

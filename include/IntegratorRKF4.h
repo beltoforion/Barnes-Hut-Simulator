@@ -10,11 +10,13 @@ public:
     IntegratorRKF4(IModel *pModel, double h);
     virtual ~IntegratorRKF4();
     virtual void SingleStep() override;
-    virtual void SetInitialState(const double *state) override;
+    virtual void SetInitialState(double *state) override;
+    virtual double *GetState() const override;
 
     void SetMaximumError(double err);
 
 private:
+    double *_state;
     double *_tmp;
     double *_k1;
     double *_k2;

@@ -8,7 +8,6 @@ IIntegrator::IIntegrator(IModel *pModel, double h)
     ,m_h(h)
     ,m_time(0)
     ,m_err(0)
-    ,_state(pModel->GetDim(), 0)
 {
     if (pModel == nullptr)
         throw std::runtime_error("Model pointer may not be NULL");

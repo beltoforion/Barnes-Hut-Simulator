@@ -8,6 +8,7 @@
 
 IntegratorRK5::IntegratorRK5(IModel *pModel, double h)
     :IIntegrator(pModel, h)
+    ,_state(new double[pModel->GetDim()])
     ,_tmp(new double[pModel->GetDim()])
     ,_k1(new double[pModel->GetDim()])
     ,_k2(new double[pModel->GetDim()])
@@ -27,6 +28,7 @@ IntegratorRK5::IntegratorRK5(IModel *pModel, double h)
 
 IntegratorRK5::~IntegratorRK5()
 {
+    delete[] _state;
     delete[] _tmp;
     delete[] _k1;
     delete[] _k2;
@@ -43,7 +45,7 @@ void IntegratorRK5::SingleStep()
     assert(m_pModel);
 
     // k1
-    m_pModel->Eval(_state.data(), m_time, _k1);
+    m_pModel->Eval(_state, m_time, _k1);
 
     // k2
     for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
@@ -88,7 +90,7 @@ void IntegratorRK5::SingleStep()
 
 
 /** \brief Sets the initial state of the simulation. */
-void IntegratorRK5::SetInitialState(const double *state)
+void IntegratorRK5::SetInitialState(double *state)
 {
     for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
     {
@@ -103,4 +105,10 @@ void IntegratorRK5::SetInitialState(const double *state)
     }
 
     m_time = 0;
+}
+
+
+double *IntegratorRK5::GetState() const
+{
+    return _state;
 }

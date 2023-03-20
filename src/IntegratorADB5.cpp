@@ -9,6 +9,7 @@
 
 IntegratorADB5::IntegratorADB5(IModel *pModel, double h)
     :IIntegrator(pModel, h)
+    ,_state()
     ,_f()
     ,_rk4(pModel, h)
 {
@@ -21,6 +22,7 @@ IntegratorADB5::IntegratorADB5(IModel *pModel, double h)
     _c[3] = 637.0 / 360.0;
     _c[4] = 251.0 / 720.0;
 
+    _state = new double[pModel->GetDim()];
     for (unsigned i = 0; i < 6; ++i)
     {
         _f[i] = new double[pModel->GetDim()];
@@ -35,6 +37,8 @@ IntegratorADB5::IntegratorADB5(IModel *pModel, double h)
 
 IntegratorADB5::~IntegratorADB5()
 {
+    delete[] _state;
+
     for (unsigned i = 0; i < 6; ++i)
         delete[] _f[i];
 }
@@ -58,12 +62,12 @@ void IntegratorADB5::SingleStep()
     }
 
     m_time += m_h;
-    m_pModel->Eval(_state.data(), m_time, _f[4]);
+    m_pModel->Eval(_state, m_time, _f[4]);
 }
 
 
 /** \brief Sets the initial state of the simulation. */
-void IntegratorADB5::SetInitialState(const double *state)
+void IntegratorADB5::SetInitialState(double *state)
 {
     for (unsigned i = 0; i < m_pModel->GetDim(); ++i)
         _state[i] = state[i];
@@ -78,7 +82,7 @@ void IntegratorADB5::SetInitialState(const double *state)
     for (std::size_t n = 0; n < 4; ++n)
     {
         // k1
-        m_pModel->Eval(_state.data(), m_time, k1);
+        m_pModel->Eval(_state, m_time, k1);
         for (std::size_t i = 0; i < m_pModel->GetDim(); ++i)
             tmp[i] = _state[i] + m_h * 0.5 * k1[i];
 
@@ -104,5 +108,11 @@ void IntegratorADB5::SetInitialState(const double *state)
         m_time += m_h;
     }
 
-    m_pModel->Eval(_state.data(), m_time, _f[4]);
+    m_pModel->Eval(_state, m_time, _f[4]);
+}
+
+
+double *IntegratorADB5::GetState() const
+{
+    return _state;
 }

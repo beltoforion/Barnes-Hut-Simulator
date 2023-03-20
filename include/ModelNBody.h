@@ -10,7 +10,7 @@
 #include "Types.h"
 
 
-/** \brief Model class for handling the n-body problem. */
+/** \brief Model class for handling th n-body problem. */
 class ModelNBody final : public IModel
 {
 public:

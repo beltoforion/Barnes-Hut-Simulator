@@ -263,7 +263,7 @@ void ModelNBody::InitCollision()
 
             st.x = st.y = 0;
             st.vx = st.vy = 0;
-            st_aux.mass = 10000000; // 431000;   // 4.31 Millionen Sonnenmassen
+            st_aux.mass = 1000000; // 431000;   // 4.31 Millionen Sonnenmassen
         }
         else if (i < 4000)
         {

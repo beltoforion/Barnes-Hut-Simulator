@@ -1,7 +1,6 @@
 #ifndef _INTEGRATOR_ADB6_H
 #define _INTEGRATOR_ADB6_H
 
-#include <vector>
 #include "IIntegrator.h"
 
 
@@ -12,10 +11,12 @@ public:
     IntegratorADB6(IModel *pModel, double h);
     virtual ~IntegratorADB6();
     virtual void SingleStep() override;
-    virtual void SetInitialState(const double *state) override;
+    virtual void SetInitialState(double *state) override;
+    virtual double *GetState() const override;
     virtual void Reverse() override;
 
 private:
+    double *_state;
     double *_f[6];
     double _c[6];
 };

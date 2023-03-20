@@ -2,7 +2,6 @@
 #define	_IINTEGRATOR_H
 
 #include <memory>
-#include <vector>
 
 #include "IModel.h"
 
@@ -22,10 +21,10 @@ public:
     void SetModel(IModel *pModel);
 
     virtual void Reverse();
-    virtual void SetInitialState(const double *state) = 0;
+    virtual void SetInitialState(double *state) = 0;
     virtual void SingleStep() = 0;
+    virtual double* GetState() const = 0;
 
-    const double* GetState() const { return _state.data();  }
     const std::string& GetID() const;
 
 protected:
@@ -38,12 +37,10 @@ protected:
 
     void SetID(const std::string &sID);
 
-    IModel *m_pModel;   ///< Pointer to the model implementation
-    double m_h;         ///< The timestep size
-    double m_time;      ///< The absolute time
-    double m_err;       ///< The local error if supported by the integration scheme
-
-    std::vector<double> _state; ///< The state of the model
+    IModel *m_pModel;               ///< Pointer to the model implementation
+    double m_h;                     ///< The timestep size
+    double m_time;                  ///< The absolute time
+    double m_err;                   ///< The local error if supported by the integration scheme
     std::string m_sID;
 
 private:
